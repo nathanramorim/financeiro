@@ -435,157 +435,239 @@ HTML_ARQUITETURA = """<!DOCTYPE html>
   <meta charset="UTF-8">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: #090d16;
-      color: #e2e8f0;
-      font-family: 'JetBrains Mono', monospace;
+      background: #0d1117;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 32px;
-      min-height: 100vh;
+      padding: 24px;
+      font-family: 'JetBrains Mono', -apple-system, BlinkMacSystemFont, monospace;
       -webkit-font-smoothing: antialiased;
     }
 
-    .terminal-card {
-      width: 1120px;
-      background: #0f172a;
-      border: 1px solid #334155;
-      border-radius: 16px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    /* Janela macOS */
+    .terminal-window {
+      width: 1040px;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.05);
       overflow: hidden;
     }
 
-    .terminal-topbar {
-      background: #1e293b;
-      padding: 12px 18px;
-      border-bottom: 1px solid #334155;
+    /* Barra Superior macOS */
+    .terminal-header {
+      background: #21262d;
+      padding: 10px 16px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      border-bottom: 1px solid #30363d;
+      position: relative;
     }
 
-    .terminal-dots {
+    .traffic-lights {
       display: flex;
       gap: 8px;
+      z-index: 2;
     }
 
-    .dot {
+    .light {
       width: 12px;
       height: 12px;
       border-radius: 50%;
     }
-    .dot-red { background: #ef4444; }
-    .dot-yellow { background: #f59e0b; }
-    .dot-green { background: #10b981; }
+    .light-close { background: #ff5f56; border: 1px solid #e0443e; }
+    .light-min { background: #ffbd2e; border: 1px solid #dea123; }
+    .light-max { background: #27c93f; border: 1px solid #1aab29; }
 
-    .terminal-title {
-      font-size: 13px;
-      color: #94a3b8;
+    .window-title {
+      position: absolute;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 12px;
+      color: #8b949e;
       font-weight: 600;
-      letter-spacing: 0.5px;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
-    .terminal-badge {
-      font-size: 11px;
+    /* Conteúdo do Terminal */
+    .terminal-content {
+      padding: 20px 24px;
+      color: #c9d1d9;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .prompt-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+    .prompt-user { color: #58a6ff; font-weight: 700; }
+    .prompt-dir { color: #7ee787; font-weight: 600; }
+    .prompt-branch { color: #d2a8ff; font-weight: 600; }
+    .prompt-cmd { color: #f0f6fc; font-weight: 700; }
+
+    /* Caixa do Claude Code */
+    .claude-box {
+      color: #8b949e;
+      margin-bottom: 14px;
+    }
+    .claude-tag {
+      color: #58a6ff;
       font-weight: 700;
-      color: #38bdf8;
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      padding: 3px 10px;
-      border-radius: 999px;
     }
 
-    .terminal-body {
-      padding: 28px 36px 32px 36px;
-      overflow-x: auto;
-    }
-
+    /* Diagrama ASCII */
     pre {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      line-height: 1.45;
-      color: #cbd5e1;
-      font-weight: 500;
+      font-size: 12.5px;
+      line-height: 1.35;
+      color: #8b949e;
     }
 
-    .hi-blue { color: #38bdf8; font-weight: 700; }
-    .hi-green { color: #4ade80; font-weight: 700; }
-    .hi-amber { color: #fbbf24; font-weight: 700; }
-    .hi-purple { color: #c084fc; font-weight: 700; }
-    .hi-muted { color: #64748b; }
+    .c-frame { color: #484f58; }
+    .c-user { color: #58a6ff; font-weight: 700; }
+    .c-front { color: #79c0ff; font-weight: 700; }
+    .c-back { color: #f0883e; font-weight: 700; }
+    .c-guard { color: #ffa657; font-weight: 700; }
+    .c-router { color: #d2a8ff; font-weight: 700; }
+    .c-agent { color: #58a6ff; font-weight: 700; }
+    .c-data { color: #7ee787; font-weight: 700; }
+    .c-llm { color: #ff7b72; font-weight: 700; }
+    .c-sub { color: #8b949e; }
+    .c-arrow { color: #58a6ff; font-weight: 700; }
+    .c-ok { color: #7ee787; font-weight: 700; }
+
+    /* Rodapé do Terminal */
+    .terminal-footer {
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid #21262d;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #8b949e;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 15px;
+      background: #58a6ff;
+      vertical-align: middle;
+      animation: blink 1s infinite;
+      margin-left: 6px;
+    }
+    @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
   </style>
 </head>
 <body>
-  <div class="terminal-card">
-    <div class="terminal-topbar">
-      <div class="terminal-dots">
-        <div class="dot dot-red"></div>
-        <div class="dot dot-yellow"></div>
-        <div class="dot dot-green"></div>
+  <div class="terminal-window">
+    <div class="terminal-header">
+      <div class="traffic-lights">
+        <div class="light light-close"></div>
+        <div class="light light-min"></div>
+        <div class="light light-max"></div>
       </div>
-      <div class="terminal-title">fluxo-arquitetura.txt — Visão Geral do Sistema Multiagente</div>
-      <div class="terminal-badge">Clean Architecture</div>
+      <div class="window-title">
+        <span>nathan@macbook</span>
+        <span style="color: #484f58">•</span>
+        <span>~/git/financeiro (main)</span>
+        <span style="color: #484f58">•</span>
+        <span style="color: #58a6ff">claude code</span>
+      </div>
     </div>
-    <div class="terminal-body">
+
+    <div class="terminal-content">
+      <div class="prompt-line">
+        <span class="prompt-user">nathan@mac</span>
+        <span class="prompt-dir">~/financeiro</span>
+        <span class="prompt-branch">(main)</span>
+        <span style="color: #8b949e">❯</span>
+        <span class="prompt-cmd">claude "desenhe a arquitetura do projeto"</span>
+      </div>
+
+      <pre class="claude-box">
+<span class="c-frame">╭─</span> <span class="claude-tag">Claude Code</span> <span class="c-frame">──────────────────────────────────────────────────────────────────────────╮</span>
+<span class="c-frame">│</span> Multi-Agent System Architecture • financeiro (FastAPI + Next.js 15)                    <span class="c-frame">│</span>
+<span class="c-frame">╰────────────────────────────────────────────────────────────────────────────────────────╯</span></pre>
+
       <pre>
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                                 <span class="hi-blue">USUÁRIO / NAVEGADOR</span>                                    │
-└───────────────────────────────────────────┬────────────────────────────────────────────┘
-                                            │ <span class="hi-muted">HTTP / JSON (:3020)</span>
-                                            ▼
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                             <span class="hi-blue">FRONTEND (Next.js 15 — :3020)</span>                              │
-│   • <span class="hi-muted">Interface Mobile-First</span>                    • <span class="hi-muted">Renderização Markdown & Badges</span>         │
-│   • <span class="hi-muted">Chips de Sugestões Rápidas</span>                • <span class="hi-muted">Gráficos Determinísticos SVG</span>           │
-└───────────────────────────────────────────┬────────────────────────────────────────────┘
-                                            │ <span class="hi-muted">REST POST /api/chat (:8000)</span>
-                                            ▼
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                              <span class="hi-amber">BACKEND (FastAPI — :8000)</span>                                 │
-│                                                                                        │
-│   ┌────────────────────────────────────────────────────────────────────────────────┐   │
-│   │                            <span class="hi-amber">GUARDRAIL VALIDATOR</span>                                 │   │
-│   │   • <span class="hi-muted">Validação de escopo estritamente financeiro</span>                                │   │
-│   │   • <span class="hi-muted">Bloqueio de injeções de prompt e assuntos fora de contexto</span>                 │   │
-│   └───────────────────────────────────────┬────────────────────────────────────────┘   │
-│                                           │ <span class="hi-green">Mensagem Aprovada</span>                          │
-│                                           ▼                                            │
-│   ┌────────────────────────────────────────────────────────────────────────────────┐   │
-│   │                               <span class="hi-purple">AGENT ROUTER</span>                                     │   │
-│   │   • <span class="hi-muted">Analisa a intenção e calcula afinidade de cada especialista</span>                │   │
-│   │   • <span class="hi-muted">Despacha para o especialista com maior score (BaseAgent)</span>                   │   │
-│   └───────────────────────────────────────┬────────────────────────────────────────┘   │
-│                                           │                                            │
-│                 ┌─────────────────────────┼─────────────────────────┐                  │
-│                 ▼                         ▼                         ▼                  │
-│        ┌──────────────────┐      ┌──────────────────┐      ┌──────────────────┐        │
-│        │ <span class="hi-blue">TransactionAgent</span> │      │   <span class="hi-blue">ReportAgent</span>    │      │  <span class="hi-blue">AdvisoryAgent</span>   │        │
-│        │ • <span class="hi-muted">Entradas/Saídas</span>│      │ • <span class="hi-muted">Balanço geral</span>  │      │ • <span class="hi-muted">Regra 50/30/20</span> │        │
-│        │ • <span class="hi-muted">Categorização</span>  │      │ • <span class="hi-muted">Gráficos SVG</span>   │      │ • <span class="hi-muted">Consultoria</span>    │        │
-│        └────────┬─────────┘      └────────┬─────────┘      └────────┬─────────┘        │
-│                 │                         │                         │                  │
-│                 └────────────┬────────────┴────────────┬────────────┘                  │
-│                              ▼                         ▼                               │
-│                     ┌──────────────────┐      ┌──────────────────┐                     │
-│                     │ <span class="hi-blue">BudgetGoalAgent</span>  │      │   <span class="hi-blue">GeneralAgent</span>   │                     │
-│                     │ • <span class="hi-muted">Metas poupança</span> │      │ • <span class="hi-muted">Conceitos Selic</span>│                     │
-│                     │ • <span class="hi-muted">Prazos & plano</span> │      │ • <span class="hi-muted">MathTool (exato)</span>│                    │
-│                     └────────┬─────────┘      └────────┬─────────┘                     │
-└──────────────────────────────┼─────────────────────────┼───────────────────────────────┘
-                               │                         │
-                 ┌─────────────┴───────────┐             │
-                 ▼                         ▼             ▼
-       ┌───────────────────┐     ┌───────────────────────────────────┐
-       │   <span class="hi-green">Google Sheets</span>   │     │          <span class="hi-purple">OpenRouter LLM</span>           │
-       │   • <span class="hi-muted">Persistência</span>  │     │   • <span class="hi-muted">Modelo Ling 3.0 Flash Fin</span>       │
-       │   • <span class="hi-muted">Cache TTL 30s</span> │     │   • <span class="hi-muted">Failover em cascata</span>            │
-       │   • <span class="hi-muted">Extrato real</span>  │     │   • <span class="hi-muted">Base local offline</span>              │
-       └───────────────────┘     └───────────────────────────────────┘
+<span class="c-frame">┌────────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="c-frame">│</span>                                  <span class="c-user">USUÁRIO / BROWSER</span>                                     <span class="c-frame">│</span>
+<span class="c-frame">└───────────────────────────────────────────┬────────────────────────────────────────────┘</span>
+                                            <span class="c-arrow">│ HTTP / JSON (:3020)</span>
+                                            <span class="c-arrow">▼</span>
+<span class="c-frame">┌────────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="c-frame">│</span>                              <span class="c-front">FRONTEND (Next.js 15 — :3020)</span>                             <span class="c-frame">│</span>
+<span class="c-frame">│</span>   • <span class="c-sub">ChatContainer com sugestões rápidas</span>      • <span class="c-sub">Renderização rica Markdown & Badges</span>     <span class="c-frame">│</span>
+<span class="c-frame">│</span>   • <span class="c-sub">Painel Mobile-First & StatTiles</span>          • <span class="c-sub">Gráficos Determinísticos SVG</span>           <span class="c-frame">│</span>
+<span class="c-frame">└───────────────────────────────────────────┬────────────────────────────────────────────┘</span>
+                                            <span class="c-arrow">│ REST POST /api/chat (:8000)</span>
+                                            <span class="c-arrow">▼</span>
+<span class="c-frame">┌────────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="c-frame">│</span>                               <span class="c-back">BACKEND (FastAPI — :8000)</span>                                <span class="c-frame">│</span>
+<span class="c-frame">│</span>                                                                                        <span class="c-frame">│</span>
+<span class="c-frame">│</span>   <span class="c-frame">┌────────────────────────────────────────────────────────────────────────────────┐</span>   <span class="c-frame">│</span>
+<span class="c-frame">│</span>   <span class="c-frame">│</span>                            <span class="c-guard">GUARDRAIL VALIDATOR</span>                                 <span class="c-frame">│</span>   <span class="c-frame">│</span>
+<span class="c-frame">│</span>   <span class="c-frame">│</span>   • <span class="c-sub">Validação de escopo financeiro estrito</span>                                     <span class="c-frame">│</span>   <span class="c-frame">│</span>
+<span class="c-frame">│</span>   <span class="c-frame">│</span>   • <span class="c-sub">Bloqueio de prompt injection e assuntos fora de contexto</span>                   <span class="c-frame">│</span>   <span class="c-frame">│</span>
+<span class="c-frame">│</span>   <span class="c-frame">└───────────────────────────────────────┬────────────────────────────────────────┘</span>   <span class="c-frame">│</span>
+<span class="c-frame">│</span>                                           <span class="c-ok">│ Mensagem Aprovada</span>                          <span class="c-frame">│</span>
+<span class="c-frame">│</span>                                           <span class="c-ok">▼</span>                                            <span class="c-frame">│</span>
+<span class="c-frame">│</span>   <span class="c-frame">┌────────────────────────────────────────────────────────────────────────────────┐</span>   <span class="c-frame">│</span>
+<span class="c-frame">│</span>   <span class="c-frame">│</span>                               <span class="c-router">AGENT ROUTER</span>                                     <span class="c-frame">│</span>   <span class="c-frame">│</span>
+<span class="c-frame">│</span>   <span class="c-frame">│</span>   • <span class="c-sub">Analisa a intenção e calcula afinidade de cada especialista</span>                <span class="c-frame">│</span>   <span class="c-frame">│</span>
+<span class="c-frame">│</span>   <span class="c-frame">│</span>   • <span class="c-sub">Despacha para o especialista com maior score (BaseAgent)</span>                   <span class="c-frame">│</span>   <span class="c-frame">│</span>
+<span class="c-frame">│</span>   <span class="c-frame">└───────────────────────────────────────┬────────────────────────────────────────┘</span>   <span class="c-frame">│</span>
+<span class="c-frame">│</span>                                           <span class="c-frame">│</span>                                            <span class="c-frame">│</span>
+<span class="c-frame">│</span>                 <span class="c-frame">┌─────────────────────────┼─────────────────────────┐</span>                  <span class="c-frame">│</span>
+<span class="c-frame">│</span>                 <span class="c-arrow">▼</span>                         <span class="c-arrow">▼</span>                         <span class="c-arrow">▼</span>                  <span class="c-frame">│</span>
+<span class="c-frame">│</span>        <span class="c-frame">┌──────────────────┐</span>      <span class="c-frame">┌──────────────────┐</span>      <span class="c-frame">┌──────────────────┐</span>        <span class="c-frame">│</span>
+<span class="c-frame">│</span>        <span class="c-frame">│</span> <span class="c-agent">TransactionAgent</span> <span class="c-frame">│</span>      <span class="c-frame">│</span>   <span class="c-agent">ReportAgent</span>    <span class="c-frame">│</span>      <span class="c-frame">│</span>  <span class="c-agent">AdvisoryAgent</span>   <span class="c-frame">│</span>        <span class="c-frame">│</span>
+<span class="c-frame">│</span>        <span class="c-frame">│</span> • <span class="c-sub">Entradas/Saídas</span><span class="c-frame">│</span>      <span class="c-frame">│</span> • <span class="c-sub">Balanço geral</span>  <span class="c-frame">│</span>      <span class="c-frame">│</span> • <span class="c-sub">Regra 50/30/20</span> <span class="c-frame">│</span>        <span class="c-frame">│</span>
+<span class="c-frame">│</span>        <span class="c-frame">│</span> • <span class="c-sub">Categorização</span>  <span class="c-frame">│</span>      <span class="c-frame">│</span> • <span class="c-sub">Gráficos SVG</span>   <span class="c-frame">│</span>      <span class="c-frame">│</span> • <span class="c-sub">Consultoria</span>    <span class="c-frame">│</span>        <span class="c-frame">│</span>
+<span class="c-frame">│</span>        <span class="c-frame">└────────┬─────────┘</span>      <span class="c-frame">└────────┬─────────┘</span>      <span class="c-frame">└────────┬─────────┘</span>        <span class="c-frame">│</span>
+<span class="c-frame">│</span>                 <span class="c-frame">│</span>                         <span class="c-frame">│</span>                         <span class="c-frame">│</span>                  <span class="c-frame">│</span>
+<span class="c-frame">│</span>                 <span class="c-frame">└────────────┬────────────┴────────────┬────────────┘</span>                  <span class="c-frame">│</span>
+<span class="c-frame">│</span>                              <span class="c-arrow">▼</span>                         <span class="c-arrow">▼</span>                               <span class="c-frame">│</span>
+<span class="c-frame">│</span>                     <span class="c-frame">┌──────────────────┐</span>      <span class="c-frame">┌──────────────────┐</span>                     <span class="c-frame">│</span>
+<span class="c-frame">│</span>                     <span class="c-frame">│</span> <span class="c-agent">BudgetGoalAgent</span>  <span class="c-frame">│</span>      <span class="c-frame">│</span>   <span class="c-agent">GeneralAgent</span>   <span class="c-frame">│</span>                     <span class="c-frame">│</span>
+<span class="c-frame">│</span>                     <span class="c-frame">│</span> • <span class="c-sub">Metas poupança</span> <span class="c-frame">│</span>      <span class="c-frame">│</span> • <span class="c-sub">Conceitos Selic</span><span class="c-frame">│</span>                     <span class="c-frame">│</span>
+<span class="c-frame">│</span>                     <span class="c-frame">│</span> • <span class="c-sub">Prazos & plano</span> <span class="c-frame">│</span>      <span class="c-frame">│</span> • <span class="c-sub">MathTool (exato)</span><span class="c-frame">│</span>                    <span class="c-frame">│</span>
+<span class="c-frame">│</span>                     <span class="c-frame">└────────┬─────────┘</span>      <span class="c-frame">└────────┬─────────┘</span>                     <span class="c-frame">│</span>
+<span class="c-frame">└──────────────────────────────┼─────────────────────────┼───────────────────────────────┘</span>
+                               <span class="c-frame">│</span>                         <span class="c-frame">│</span>
+                 <span class="c-frame">┌─────────────┴───────────┐</span>             <span class="c-frame">│</span>
+                 <span class="c-arrow">▼</span>                         <span class="c-arrow">▼</span>             <span class="c-arrow">▼</span>
+       <span class="c-frame">┌───────────────────┐</span>     <span class="c-frame">┌───────────────────────────────────┐</span>
+       <span class="c-frame">│</span>   <span class="c-data">Google Sheets</span>   <span class="c-frame">│</span>     <span class="c-frame">│</span>          <span class="c-llm">OpenRouter LLM</span>           <span class="c-frame">│</span>
+       <span class="c-frame">│</span>   • <span class="c-sub">Persistência</span>  <span class="c-frame">│</span>     <span class="c-frame">│</span>   • <span class="c-sub">Modelo Ling 3.0 Flash Fin</span>     <span class="c-frame">│</span>
+       <span class="c-frame">│</span>   • <span class="c-sub">Cache TTL 30s</span> <span class="c-frame">│</span>     <span class="c-frame">│</span>   • <span class="c-sub">Failover em cascata</span>          <span class="c-frame">│</span>
+       <span class="c-frame">│</span>   • <span class="c-sub">Extrato real</span>  <span class="c-frame">│</span>     <span class="c-frame">│</span>   • <span class="c-sub">Base local offline</span>            <span class="c-frame">│</span>
+       <span class="c-frame">└───────────────────┘</span>     <span class="c-frame">└───────────────────────────────────┘</span>
       </pre>
+
+      <div class="terminal-footer">
+        <div>
+          <span style="color: #7ee787">✓</span> Arquitetura carregada: <span style="color: #f0f6fc; font-weight: 600;">5 agentes especialistas registrados</span>
+        </div>
+        <div>
+          <span class="prompt-user">nathan@mac</span> <span style="color: #8b949e">❯</span><span class="cursor"></span>
+        </div>
+      </div>
     </div>
   </div>
 </body>
@@ -619,13 +701,13 @@ async def main():
 
         # 2. Renderizar Arquitetura
         context2 = await browser.new_context(
-            viewport={"width": 1264, "height": 840},
+            viewport={"width": 1180, "height": 880},
             device_scale_factor=2
         )
         page2 = await context2.new_page()
         await page2.set_content(HTML_ARQUITETURA, wait_until="networkidle")
         await asyncio.sleep(1)
-        container2 = page2.locator(".terminal-card")
+        container2 = page2.locator(".terminal-window")
         await container2.screenshot(path=str(arquitetura_png))
         print(f"Arquitetura renderizada em: {arquitetura_png}")
         await context2.close()
