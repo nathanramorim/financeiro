@@ -2,6 +2,7 @@ import React from "react";
 import { Message, ReportData } from "@/domain/types";
 import { TransactionConfirmCard } from "@/components/transactions/TransactionConfirmCard";
 import { FinancialCharts } from "@/components/reports/FinancialCharts";
+import { MarkdownRenderer } from "./MarkdownRenderer";
 
 interface MessageBubbleProps {
   message: Message;
@@ -34,7 +35,11 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
               : "bg-white text-text border border-panel-border rounded-bl-none"
           }`}
         >
-          <div className="whitespace-pre-wrap break-words">{message.text}</div>
+          {isUser ? (
+            <div className="whitespace-pre-wrap break-words">{message.text}</div>
+          ) : (
+            <MarkdownRenderer content={message.text} />
+          )}
 
           {/* Se a mensagem incluir ação pendente de confirmação */}
           {!isUser && message.pendingAction && (

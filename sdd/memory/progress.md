@@ -4,19 +4,20 @@
 ```
 Fase 1 — Agente Financeiro Chat [X] concluído
 Fase 2 — Migração API FastAPI + Frontend Next.js [X] concluído
+Correções [X] fix-b103 concluído
 ```
 
 ## Features ativas
 | Feature | Branch | Status |
 |---------|--------|--------|
-| feat-a102-migracao-api-nextjs | feat/a102-migracao-api-nextjs | done |
+| fix-b103-renderizacao-markdown-relatorio | fix/b103-renderizacao-markdown-relatorio | done |
 
 ## Próximo passo
-- Sistema migrado com sucesso para FastAPI (backend REST) e Next.js (frontend mobile-first).
-- 34 testes automatizados em Python passando 100%.
-- Build de produção do Next.js aprovado.
+- Fix `fix-b103-renderizacao-markdown-relatorio` concluído e aprovado.
+- Build Next.js compilado sem erros com `react-markdown` e `MarkdownRenderer`.
+- Suíte completa de testes aprovada.
 - Pronto para revisão (comando `/revisar`).
 
 ## Handoff da última sessão
-- Implementada a feature `feat/a102-migracao-api-nextjs` com os 4 submódulos (FastAPI, Next.js foundation, Chat/Gráficos, Homologação E2E).
-- Rules de arquitetura e frontend adaptadas ao domínio financeiro.
+- Criado componente `MarkdownRenderer.tsx` integrado ao `MessageBubble.tsx`.
+- Mensagens com cabeçalhos (`###`), negritos e listas de relatórios financeiros agora renderizam em HTML estilizado.
