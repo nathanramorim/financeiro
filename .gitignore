@@ -58,3 +58,7 @@ client_secret*.json
 *.sqlite3
 *.db
 
+# Temporary recordings
+scripts/videos/
+*.webm
+
