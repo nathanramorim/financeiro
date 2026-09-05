@@ -1,33 +1,33 @@
 # Constituição — financeiro
 
 ## Missão
-Sistema inteligente de gestão de finanças pessoais via chat web, com validação de escopo por guardrails, integração ao Google Sheets e suporte a operações financeiras e cálculos sob demanda.
+Sistema inteligente de gestão de finanças pessoais via chat web desacoplado, com validação de escopo por guardrails, integração ao Google Sheets com cache resiliente e interface mobile-first moderna.
 
 ## Stack
 | Camada | Escolha | Motivo |
 |--------|---------|--------|
 | Runtime Backend | python (>=3.11) | Ecossistema maduro para IA, manipulação de dados e automação |
-| Backend Framework | fastapi | API RESTful assíncrona, robusta, tipada e documentada |
+| Backend Framework | fastapi | API RESTful assíncrona, robusta, tipada e documentada (Porta 8000) |
 | Runtime Frontend | node.js (>=20) | Ambiente estável e moderno para a interface web |
-| Frontend Framework | next.js (App Router) | Interface moderna, modular, suporte a Tailwind CSS e performance mobile-first |
+| Frontend Framework | next.js (App Router) | Interface moderna exclusiva, modular, TypeScript e performance mobile-first (Porta 3020) |
 | Styling UI | tailwindcss | Conformidade estrita com o Design System da organização (`.agents/rules/design-system.md`) |
 | Package Manager Backend | uv | Gerenciador rápido de dependências, ambiente virtual e pacotes Python |
 | Package Manager Frontend | npm | Gerenciador padrão e estável para ecossistema Node.js / React |
-| Interface Prototipagem | streamlit | Interface legada mantida para testes comparativos em Python |
 | Gateway LLM | openrouter | Acesso unificado a diversos provedores de modelos de linguagem |
 | Persistência | google-sheets | Armazenamento acessível e prático para despesas fixas, receitas e saldo |
-| Integração Sheets | gspread / google-auth | Biblioteca Python oficial e estável para integração OAuth/Service Account com Google Sheets |
+| Integração Sheets | gspread / google-auth | Biblioteca Python oficial e estável com cache TTL (30s) e backup local resiliente contra limite 429 |
 
 ## Decisões resolvidas
 | Decisão | Resolução |
 |---------|-----------|
 | Arquitetura Desacoplada | Backend em FastAPI expondo rotas REST e Frontend em Next.js com App Router |
+| Desativação do Streamlit | Streamlit descontinuado e substituído definitivamente pela interface Next.js |
 | Package Manager `uv` | Uso obrigatório e exclusivo de `uv` para gestão de pacotes Python, ambiente virtual e execução (`uv run`, `uv pip`, `uv sync`) |
 | OpenRouter Gateway | Centralização do acesso a modelos LLM |
 | Guardrail na entrada | Filtragem de prompts fora de contexto antes do envio à LLM |
 | Calculadora dedicada | Operações matemáticas executadas em código Python (MathTool) para evitar alucinações |
-| Persistência no Google Sheets | Leitura e gravação de despesas e receitas em planilhas Google |
-| Mobile-First Obrigatório | Todas as telas, botões e gráficos do frontend devem ser responsivos desde 360px |
+| Resiliência Google Sheets | Cache TTL em memória (30s) e backup local em `.cache/sheets_backup.json` para eliminar erro 429 de quota |
+| Mobile-First Obrigatório | Todas as telas, cards, botões e gráficos do frontend são desenhados prioritariamente para mobile (360px+) |
 
 ## Ferramentas e Integrações
 | Campo | Valor |
