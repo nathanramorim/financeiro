@@ -5,12 +5,17 @@ build/
 dist/
 wheels/
 *.egg-info
+.DS_Store
+*/.DS_Store
 
-# Virtual environments
+# Virtual environments & Node modules
 .venv
+node_modules/
+.next/
+out/
 
 # Secrets & Credentials (NEVER COMMIT)
 .env
-credentials.json
-*.json
-!pyproject.toml
+.env*.local
+credentials*.json
+token*.json

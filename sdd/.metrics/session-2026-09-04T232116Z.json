@@ -1,0 +1,26 @@
+{
+  "$schema": "forge-sdd/metrics/1.0",
+  "feature": "sdd/features/fix-5a01-correcao-adicao-despesas.md",
+  "phase": "fix",
+  "agent_path": [
+    "orquestrador",
+    "builder"
+  ],
+  "tokens_input": 15000,
+  "tokens_output": 2500,
+  "turns": 6,
+  "duration_seconds": 300,
+  "criterio_atendido": true,
+  "model": "Gemini 3.6 Flash",
+  "rework_lines": 0,
+  "context7_calls": 0,
+  "git_calls": 0,
+  "files_touched": [
+    "src/agent/engine.py",
+    "tests/test_agent.py",
+    "sdd/memory/progress.md",
+    "sdd/releases/history.md"
+  ],
+  "outcome": "approved",
+  "sdd_version": "2.3.0-beta"
+}

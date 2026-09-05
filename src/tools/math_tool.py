@@ -34,3 +34,35 @@ class MathTool:
     @staticmethod
     def multiply(amount: float, factor: float) -> float:
         return round(amount * factor, 2)
+
+    @staticmethod
+    def parse_float(val) -> float:
+        """
+        Converte com segurança inteiros, floats e strings numéricas (formatos PT-BR e US) em float.
+        Ex: '85,5' -> 85.5, '1.500,50' -> 1500.50, '1,500.50' -> 1500.50, 1500 -> 1500.0
+        """
+        if val is None:
+            return 0.0
+        if isinstance(val, (int, float)):
+            return float(val)
+        val_str = str(val).strip()
+        if not val_str:
+            return 0.0
+        
+        # Se contém vírgula e ponto (ex: 1.500,50 ou 1,500.50)
+        if ',' in val_str and '.' in val_str:
+            if val_str.rfind(',') > val_str.rfind('.'):
+                # Formato PT-BR: 1.500,50 -> 1500.50
+                val_str = val_str.replace('.', '').replace(',', '.')
+            else:
+                # Formato US: 1,500.50 -> 1500.50
+                val_str = val_str.replace(',', '')
+        elif ',' in val_str:
+            # Formato PT-BR decimal: 85,5 ou 85,50 -> 85.5
+            val_str = val_str.replace(',', '.')
+        
+        try:
+            return float(val_str)
+        except ValueError:
+            return 0.0
+

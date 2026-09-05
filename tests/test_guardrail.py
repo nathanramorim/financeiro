@@ -21,3 +21,11 @@ def test_guardrail_empty_prompt():
     validator = GuardrailValidator()
     result = validator.validate("")
     assert result.is_valid is False
+
+def test_guardrail_valid_report_prompts():
+    validator = GuardrailValidator()
+    assert validator.validate("relatorio").is_valid is True
+    assert validator.validate("relatório").is_valid is True
+    assert validator.validate("gerar relatório com gráficos").is_valid is True
+    assert validator.validate("exibir gráficos").is_valid is True
+

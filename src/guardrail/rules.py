@@ -4,7 +4,8 @@ FINANCIAL_KEYWORDS = [
     "supermercado", "luz", "água", "internet", "salário", "pagamento", "dividir",
     "multiplicar", "categoria", "categorizar", "finanças", "orçamento", "banco",
     "dinheiro", "cartão", "parcela", "fatura", "economia", "guardar", "investimento",
-    "r$", "reais", "valor", "conta", "contas"
+    "r$", "reais", "valor", "conta", "contas", "relatorio", "relatório", "grafico",
+    "graficos", "gráfico", "gráficos", "balanço", "balanco"
 ]
 
 OUT_OF_SCOPE_MSG = (

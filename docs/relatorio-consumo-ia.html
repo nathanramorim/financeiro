@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Custo e consumo de IA — financeiro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+/>
+<style>
+  :root {
+    --bg: #ffffff;
+    --panel: #f6f8fb;
+    --panel-border: #e4e9f0;
+    --panel-border-strong: #bfd3f5;
+    --text: #0f172a;
+    --text-dim: #5b6675;
+
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+
+    --success: #16a34a;
+    --success-bg: #dcfce7;
+    --warning: #d97706;
+    --warning-bg: #fef3c7;
+    --danger: #dc2626;
+    --danger-bg: #fee2e2;
+
+    --accent-indigo: #4f46e5;
+    --accent-violet: #7c3aed;
+    --accent-blue-soft: #60a5fa;
+    --accent-blue-softer: #93c5fd;
+
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-pill: 999px;
+
+    --font: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+    --slide-w: 1280px;
+    --slide-h: 720px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: var(--font);
+    background: #dfe4ec;
+    color: var(--text);
+  }
+
+  code {
+    background: #eef2f7;
+    padding: 1px 7px;
+    border-radius: 6px;
+    font-size: 0.85em;
+    white-space: nowrap;
+  }
+
+  /* ---------- barra de instruções ---------- */
+  .howto {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #fff;
+    border-bottom: 1px solid var(--panel-border);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .howto h3 { margin: 0 0 4px; font-size: 15px; font-weight: 800; }
+  .howto p { margin: 0; font-size: 12.5px; color: var(--text-dim); max-width: 680px; }
+  .howto .btn-primary {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 20px;
+    font-weight: 700;
+    font-size: 13.5px;
+    font-family: var(--font);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .howto .btn-primary:hover { background: var(--primary-hover); }
+
+  /* ---------- palco de slides ---------- */
+  .stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    padding: 28px 0 80px;
+  }
+
+  .slide {
+    width: var(--slide-w);
+    height: var(--slide-h);
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(15, 23, 42, 0.12);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 48px 64px 32px;
+  }
+
+  .slide-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    color: var(--primary);
+  }
+  .kicker .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); }
+
+  .slide-index {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text-dim);
+  }
+
+  .slide h1 {
+    font-size: 44px;
+    font-weight: 900;
+    line-height: 1.15;
+    margin: 0 0 14px;
+  }
+  .slide h2 {
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1.2;
+    margin: 0 0 16px;
+  }
+  .slide .lead {
+    font-size: 17px;
+    color: var(--text-dim);
+    font-weight: 500;
+    line-height: 1.5;
+    margin: 0 0 6px;
+    max-width: 900px;
+  }
+  .slide p { font-size: 15.5px; line-height: 1.55; color: var(--text); }
+
+  .body-row { display: flex; gap: 36px; flex: 1; min-height: 0; }
+  .body-col { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+  .spacer { flex: 1; }
+
+  .footer-mark {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-weight: 700;
+    border-top: 1px solid var(--panel-border);
+    padding-top: 14px;
+    margin-top: auto;
+  }
+  .footer-mark .brand { text-transform: lowercase; letter-spacing: 0.2px; }
+  .footer-mark .brand span { color: var(--primary); }
+
+  /* componentes */
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+  }
+  .card.on-white { background: #fff; }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .badge-success { background: var(--success-bg); color: var(--success); }
+  .badge-warning { background: var(--warning-bg); color: var(--warning); }
+  .badge-danger  { background: var(--danger-bg);  color: var(--danger); }
+  .badge-neutral { background: #eef2f7; color: var(--text-dim); }
+  .badge-primary { background: #eff4ff; color: var(--primary); border: 1px solid var(--panel-border-strong); }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .stat-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .stat-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .stat {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius-sm);
+    padding: 18px 14px;
+    text-align: center;
+  }
+  .stat-value { font-size: 2.1rem; font-weight: 900; color: var(--primary); display: block; }
+  .stat-label { font-size: 0.78rem; color: var(--text-dim); margin-top: 6px; display: block; font-weight: 600; }
+
+  .list-check { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .list-check li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 15.5px;
+    line-height: 1.45;
+  }
+  .list-check .ico-wrap {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--success-bg);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .list-check.blue .ico-wrap { background: #eff4ff; }
+  .list-check.warn .ico-wrap { background: var(--warning-bg); }
+
+  /* tabela */
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead th {
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--panel-border);
+  }
+  tbody td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--panel-border);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+
+  /* barras de execução (feat vs fix) */
+  .exec-bars { display: flex; align-items: flex-end; gap: 40px; height: 200px; padding: 0 20px; }
+  .exec-col { display: flex; flex-direction: column; align-items: center; gap: 10px; height: 100%; justify-content: flex-end; width: 140px; }
+  .exec-bar { width: 100%; border-radius: 8px 8px 0 0; display: flex; align-items: flex-start; justify-content: center; padding-top: 10px; }
+  .exec-bar .n { color: #fff; font-weight: 900; font-size: 22px; }
+  .exec-label { font-size: 13px; font-weight: 700; color: var(--text-dim); text-align: center; }
+
+  /* progress rows (cobertura) */
+  .progress-row { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+  .progress-row .label { width: 240px; font-size: 13.5px; font-weight: 600; color: var(--text); flex-shrink: 0; }
+  .progress-track { flex: 1; height: 11px; background: #eef2f7; border-radius: var(--radius-pill); overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: var(--radius-pill); background: var(--panel-border-strong); }
+  .progress-fill.on { background: var(--success); }
+  .progress-tag { width: 80px; text-align: right; font-size: 12px; font-weight: 700; color: var(--text-dim); flex-shrink: 0; }
+
+  /* ---------- IMPRESSÃO / PDF ---------- */
+  @media print {
+    body { background: #fff; }
+    .howto { display: none; }
+    .stage { padding: 0; gap: 0; }
+    .slide {
+      box-shadow: none;
+      border-radius: 0;
+      page-break-after: always;
+      break-after: page;
+      width: var(--slide-w);
+      height: var(--slide-h);
+    }
+    .slide:last-child { page-break-after: auto; }
+  }
+
+  @page {
+    size: 1280px 720px;
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="howto no-print">
+  <div>
+    <h3>Exportar como PDF (formato apresentação 16:9)</h3>
+    <p>
+      <code>Cmd/Ctrl + P</code> → destino <code>Salvar como PDF</code> → escala <code>100%</code>,
+      sem cabeçalhos/rodapés. O tamanho de página já está fixado em 1280×720px — equivalente a um slide
+      16:9 de PowerPoint/Keynote.
+    </p>
+  </div>
+  <button class="btn-primary" onclick="window.print()">Exportar / Imprimir PDF</button>
+</div>
+
+<div class="stage">
+
+  <!-- SLIDE 1 — CAPA -->
+  <section class="slide">
+    <div class="slide-topbar">
+      <span class="kicker"><span class="dot"></span>Telemetria de IA · financeiro</span>
+      <span class="slide-index">1 / 9</span>
+    </div>
+    <div class="spacer" style="flex:0.3;"></div>
+    <h1>Custo, tokens, tempo e execução<br>no desenvolvimento com IA</h1>
+    <p class="lead">Dados extraídos de <code>sdd/.metrics/*.json</code>, <code>sdd/memory/progress.md</code> e <code>git reflog</code> — sem estimativas onde não há registro real.</p>
+    <div class="spacer"></div>
+    <div class="footer-mark">
+      <span class="brand">nathanramorim <span>· financeiro</span></span>
+      <span>gerado em 2026-09-04</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 — METODOLOGIA -->
+  <section class="slide">
+    <div class="slide-topbar">
+      <span class="kicker"><span class="dot"></span>Metodologia</span>
+      <span class="slide-index">2 / 9</span>
+    </div>
+    <h2>Três fontes, três perguntas</h2>
+    <div class="body-row" style="margin-top: 8px;">
+      <div class="card on-white" style="flex:1; border-color: var(--panel-border-strong);">
+        <table>
+          <thead><tr><th>Pergunta</th><th>Fonte</th></tr></thead>
+          <tbody>
+            <tr><td>Quantos tokens / qual modelo / quanto custou?</td><td><code>sdd/.metrics/session-*.json</code></td></tr>
+            <tr><td>Quantas features e quantos fixes?</td><td><code>sdd/memory/progress.md</code></td></tr>
+            <tr><td>Quanto tempo durou a sessão?</td><td><code>git reflog</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card" style="margin-top: 20px;">
+      <p style="margin:0;">O schema <code>forge-sdd/metrics/1.0</code> registra <code>tokens_input</code>, <code>tokens_output</code>, <code>model</code>, <code>turns</code>, <code>duration_seconds</code> e <code>outcome</code> — mas <strong>não tem campo de custo em R$/US$</strong>. Isso é relevante para a resposta do slide 4.</p>
+    </div>
+    <div class="spacer"></div>
+    <div class="footer-mark"><span class="brand">nathanramorim <span>· financeiro</span></span><span>sdd/.metrics/schema.json</span></div>
+  </section>
+
+  <!-- SLIDE 3 — TOKENS E MODELO -->
+  <section class="slide">
+    <div class="slide-topbar">
+      <span class="kicker"><span class="dot"></span>Consumo medido</span>
+      <span class="slide-index">3 / 9</span>
+    </div>
+    <h2>Tokens e modelo — única sessão completa</h2>
+    <p class="lead">Feature <code>fix-5a01-correcao-adicao-despesas</code>, sessão <code>session-2026-09-04T232116Z.json</code>.</p>
+
+    <div class="stat-grid" style="margin-top: 24px;">
+      <div class="stat">
+        <span class="stat-value">15.000</span>
+        <span class="stat-label">tokens_input</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">2.500</span>
+        <span class="stat-label">tokens_output</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">17.500</span>
+        <span class="stat-label">total de tokens</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">6</span>
+        <span class="stat-label">turns</span>
+      </div>
+    </div>
+
+    <div class="card on-white" style="border-color: var(--panel-border-strong); margin-top:18px;">
+      <p style="margin:0;"><strong>Modelo:</strong> <span class="badge badge-primary">Gemini 3.6 Flash</span> · <strong>agent_path:</strong> orquestrador → builder · <strong>outcome:</strong> <span class="badge badge-success">approved</span></p>
+    </div>
+    <div class="spacer"></div>
+    <div class="footer-mark"><span class="brand">nathanramorim <span>· financeiro</span></span><span>1 sessão medida de 10 features</span></div>
+  </section>
+
+  <!-- SLIDE 4 — CUSTO -->
+  <section class="slide">
+    <div class="slide-topbar">
+      <span class="kicker"><span class="dot"></span>Custo</span>
+      <span class="slide-index">4 / 9</span>
+    </div>
+    <h2>Quanto isso custou em R$/US$?</h2>
+    <p class="lead">Resposta honesta: <strong>não é possível calcular com precisão</strong> a partir dos dados deste repositório.</p>
+
+    <div class="card" style="margin-top: 20px;">
+      <p style="margin:0 0 10px;"><strong>Por quê:</strong></p>
+      <ul class="list-check warn">
+        <li>
+          <span class="ico-wrap"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 4v3.5" stroke="#d97706" stroke-width="1.6" stroke-linecap="round"/><circle cx="7" cy="9.8" r="0.9" fill="#d97706"/></svg></span>
+          <span>O schema de telemetria (<code>forge-sdd/metrics/1.0</code>) não tem campo de custo — só <code>tokens_input</code> / <code>tokens_output</code>.</span>
+        </li>
+        <li>
+          <span class="ico-wrap"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 4v3.5" stroke="#d97706" stroke-width="1.6" stroke-linecap="round"/><circle cx="7" cy="9.8" r="0.9" fill="#d97706"/></svg></span>
+          <span>Não há, neste repositório, uma tabela de preço por modelo (ex.: US$/milhão de tokens do "Gemini 3.6 Flash") que eu possa citar com confiança.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="card on-white" style="border-color: var(--panel-border-strong); margin-top:16px;">
+      <p style="margin:0;"><strong>Fórmula pronta para quando houver preço oficial:</strong><br>
+      <code>custo = (tokens_input / 1.000.000 × preço_input) + (tokens_output / 1.000.000 × preço_output)</code><br>
+      Com os 15.000/2.500 tokens medidos, basta plugar o preço por milhão de tokens do plano contratado.</p>
+    </div>
+    <div class="spacer"></div>
+    <div class="footer-mark"><span class="brand">nathanramorim <span>· financeiro</span></span><span>recomendação no slide 8</span></div>
+  </section>
+
+  <!-- SLIDE 5 — TEMPO -->
+  <section class="slide">
+    <div class="slide-topbar">
+      <span class="kicker"><span class="dot"></span>Tempo</span>
+      <span class="slide-index">5 / 9</span>
+    </div>
+    <h2>Duração real da sessão de desenvolvimento</h2>
+    <p class="lead">Medido via <code>git reflog</code>: primeiro commit até o último checkout de branch, nesta sessão.</p>
+
+    <div class="stat-grid cols-3" style="margin-top: 24px;">
+      <div class="stat">
+        <span class="stat-value">~1h02</span>
+        <span class="stat-label">20:21:13 → 21:22:52 (2026-09-04)</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">300s</span>
+        <span class="stat-label">duration_seconds da única sessão medida (5 min)</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">10</span>
+        <span class="stat-label">branches percorridas na sessão</span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 20px;">
+      <p style="margin:0;">O tempo total (~1h02) cobre as 10 features; os 300s são só da tarefa com telemetria completa. As outras 9 não têm <code>duration_seconds</code> gravado — não estimamos o restante.</p>
+    </div>
+    <div class="spacer"></div>
+    <div class="footer-mark"><span class="brand">nathanramorim <span>· financeiro</span></span><span>git reflog --date=iso</span></div>
+  </section>
+
+  <!-- SLIDE 6 — EXECUÇÃO: FEATURES x FIXES -->
+  <section class="slide">
+    <div class="slide-topbar">
+      <span class="kicker"><span class="dot"></span>Execução</span>
+      <span class="slide-index">6 / 9</span>
+    </div>
+    <h2>10 entregas: 4 features, 6 fixes</h2>
+    <p class="lead">Contagem direta de <code>sdd/memory/progress.md</code> pelo prefixo do nome (<code>feat-*</code> vs <code>fix-*</code>).</p>
+
+    <div class="exec-bars" style="margin-top: 32px;">
+      <div class="exec-col">
+        <div class="exec-bar" style="height: 67%; background: var(--primary);"><span class="n">6</span></div>
+        <span class="exec-label">Fixes<br><span style="color:var(--text-dim); font-weight:500;">correções de bug</span></span>
+      </div>
+      <div class="exec-col">
+        <div class="exec-bar" style="height: 45%; background: var(--accent-blue-soft);"><span class="n">4</span></div>
+        <span class="exec-label">Features<br><span style="color:var(--text-dim); font-weight:500;">funcionalidades novas</span></span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 20px;">
+      <p style="margin:0;"><strong>Features:</strong> agente financeiro chat, botões de confirmação, relatório com gráficos, design system mobile-first.<br>
+      <strong>Fixes:</strong> reconhecimento de despesas, persistência, parse de decimais, guardrail de palavras-chave, spinner de carregamento, otimização de tempo de resposta.</p>
+    </div>
+    <div class="spacer"></div>
+    <div class="footer-mark"><span class="brand">nathanramorim <span>· financeiro</span></span><span>10 entregas totais, todas done</span></div>
+  </section>
+
+  <!-- SLIDE 7 — COBERTURA DE TELEMETRIA -->
+  <section class="slide">
+    <div class="slide-topbar">
+      <span class="kicker"><span class="dot"></span>Cobertura</span>
+      <span class="slide-index">7 / 9</span>
+    </div>
+    <h2>1 de 10 entregas com telemetria completa</h2>
+
+    <div style="margin-top: 20px;">
+      <div class="progress-row"><span class="label">feat-01-agente-financeiro-chat</span><div class="progress-track"><div class="progress-fill" style="width:8%;"></div></div><span class="progress-tag">sem dado</span></div>
+      <div class="progress-row"><span class="label">fix-5a01-correcao-adicao-despesas</span><div class="progress-track"><div class="progress-fill on" style="width:100%;"></div></div><span class="progress-tag" style="color:var(--success);">medido</span></div>
+      <div class="progress-row"><span class="label">fix-5b01-persistencao-despesas-receitas</span><div class="progress-track"><div class="progress-fill" style="width:8%;"></div></div><span class="progress-tag">sem dado</span></div>
+      <div class="progress-row"><span class="label">feat-5c01-botoes-confirmacao-ui</span><div class="progress-track"><div class="progress-fill" style="width:8%;"></div></div><span class="progress-tag">sem dado</span></div>
+      <div class="progress-row"><span class="label">fix-5d01-correcao-parse-valores-decimais</span><div class="progress-track"><div class="progress-fill" style="width:8%;"></div></div><span class="progress-tag">sem dado</span></div>
+      <div class="progress-row"><span class="label">feat-6e01-relatorio-graficos-categoria</span><div class="progress-track"><div class="progress-fill" style="width:8%;"></div></div><span class="progress-tag">sem dado</span></div>
+      <div class="progress-row"><span class="label">fix-6f01-guardrail-palavras-chave</span><div class="progress-track"><div class="progress-fill" style="width:8%;"></div></div><span class="progress-tag">sem dado</span></div>
+      <div class="progress-row"><span class="label">fix-7a01-spinner-carregamento</span><div class="progress-track"><div class="progress-fill" style="width:8%;"></div></div><span class="progress-tag">sem dado</span></div>
+      <div class="progress-row"><span class="label">fix-8b01-otimizacao-tempo-resposta</span><div class="progress-track"><div class="progress-fill" style="width:8%;"></div></div><span class="progress-tag">sem dado</span></div>
+      <div class="progress-row"><span class="label">feat-9c01-design-system-mobile-first</span><div class="progress-track"><div class="progress-fill" style="width:8%;"></div></div><span class="progress-tag">sem dado</span></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="footer-mark"><span class="brand">nathanramorim <span>· financeiro</span></span><span>gap: telemetry.enabled não ativo</span></div>
+  </section>
+
+  <!-- SLIDE 8 — RECOMENDAÇÕES -->
+  <section class="slide">
+    <div class="slide-topbar">
+      <span class="kicker"><span class="dot"></span>Próximos passos</span>
+      <span class="slide-index">8 / 9</span>
+    </div>
+    <h2>Como fechar as lacunas de custo, tokens e tempo</h2>
+
+    <ul class="list-check blue" style="margin-top: 24px;">
+      <li>
+        <span class="ico-wrap"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 7l2.8 2.8L11 4.5" stroke="#2563eb" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span><strong>Ativar <code>telemetry.enabled = true</code></strong> antes do próximo CLOSE, para capturar tokens/tempo de todas as próximas entregas.</span>
+      </li>
+      <li>
+        <span class="ico-wrap"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 7l2.8 2.8L11 4.5" stroke="#2563eb" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span><strong>Adicionar campo de custo</strong> (ex.: <code>cost_usd</code>) ao schema <code>forge-sdd/metrics/1.0</code>, calculado a partir da tabela de preço do provedor do modelo.</span>
+      </li>
+      <li>
+        <span class="ico-wrap"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 7l2.8 2.8L11 4.5" stroke="#2563eb" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span><strong>Guardar a tabela de preços do modelo</strong> usado (ex. Gemini 3.6 Flash) em <code>sdd/memory/</code> para permitir cálculo automático de custo por sessão.</span>
+      </li>
+    </ul>
+    <div class="spacer"></div>
+    <div class="footer-mark"><span class="brand">nathanramorim <span>· financeiro</span></span><span>ação: orquestrador no próximo CLOSE</span></div>
+  </section>
+
+  <!-- SLIDE 9 — FECHAMENTO -->
+  <section class="slide">
+    <div class="slide-topbar">
+      <span class="kicker"><span class="dot"></span>Resumo</span>
+      <span class="slide-index">9 / 9</span>
+    </div>
+    <h2>Em uma frase</h2>
+    <div class="card" style="margin: 20px 0 20px;">
+      <p style="font-size: 20px; font-weight: 700; line-height: 1.55; margin: 0;">
+        10 entregas concluídas (4 features, 6 fixes) em <span style="color:var(--primary);">~1h02</span> de sessão;
+        apenas 1 tem telemetria completa — <span style="color:var(--primary);">17.500 tokens</span> (15.000 in / 2.500 out)
+        no modelo <span style="color:var(--primary);">Gemini 3.6 Flash</span>, em 300s — e o custo em R$/US$
+        segue <strong>não calculável</strong> até existir preço por token registrado.
+      </p>
+    </div>
+    <div class="stat-grid cols-2">
+      <div class="stat"><span class="stat-value">10</span><span class="stat-label">entregas (4 feat / 6 fix)</span></div>
+      <div class="stat"><span class="stat-value">1</span><span class="stat-label">com tokens, modelo e tempo medidos</span></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="footer-mark"><span class="brand">nathanramorim <span>· financeiro</span></span><span>fim</span></div>
+  </section>
+
+</div>
+</body>
+</html>

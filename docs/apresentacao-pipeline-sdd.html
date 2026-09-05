@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pipeline Forge-SDD — financeiro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+/>
+<style>
+  :root {
+    --bg: #ffffff;
+    --panel: #f6f8fb;
+    --panel-border: #e4e9f0;
+    --panel-border-strong: #bfd3f5;
+    --text: #0f172a;
+    --text-dim: #5b6675;
+
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+
+    --success: #16a34a;
+    --success-bg: #dcfce7;
+    --warning: #d97706;
+    --warning-bg: #fef3c7;
+    --danger: #dc2626;
+    --danger-bg: #fee2e2;
+
+    --accent-indigo: #4f46e5;
+    --accent-violet: #7c3aed;
+    --accent-blue-soft: #60a5fa;
+    --accent-blue-softer: #93c5fd;
+
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-pill: 999px;
+
+    --font: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+    --slide-w: 1280px;
+    --slide-h: 720px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: var(--font);
+    background: #dfe4ec;
+    color: var(--text);
+  }
+
+  code {
+    background: #eef2f7;
+    padding: 1px 7px;
+    border-radius: 6px;
+    font-size: 0.85em;
+    white-space: nowrap;
+  }
+
+  /* ---------- barra de instruções ---------- */
+  .howto {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #fff;
+    border-bottom: 1px solid var(--panel-border);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .howto h3 { margin: 0 0 4px; font-size: 15px; font-weight: 800; }
+  .howto p { margin: 0; font-size: 12.5px; color: var(--text-dim); max-width: 680px; }
+  .howto .btn-primary {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 20px;
+    font-weight: 700;
+    font-size: 13.5px;
+    font-family: var(--font);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .howto .btn-primary:hover { background: var(--primary-hover); }
+
+  /* ---------- palco de slides ---------- */
+  .stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    padding: 28px 0 80px;
+  }
+
+  .slide {
+    width: var(--slide-w);
+    height: var(--slide-h);
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(15, 23, 42, 0.12);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 48px 64px 32px;
+  }
+
+  .slide-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    color: var(--primary);
+  }
+  .kicker .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); }
+
+  .slide-index {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text-dim);
+  }
+
+  .slide h1 {
+    font-size: 44px;
+    font-weight: 900;
+    line-height: 1.15;
+    margin: 0 0 14px;
+  }
+  .slide h2 {
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1.2;
+    margin: 0 0 16px;
+  }
+  .slide .lead {
+    font-size: 17px;
+    color: var(--text-dim);
+    font-weight: 500;
+    line-height: 1.5;
+    margin: 0 0 6px;
+    max-width: 900px;
+  }
+  .slide p { font-size: 15.5px; line-height: 1.55; color: var(--text); }
+
+  .body-row { display: flex; gap: 36px; flex: 1; min-height: 0; }
+  .body-col { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+  .spacer { flex: 1; }
+
+  .footer-mark {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-weight: 700;
+    border-top: 1px solid var(--panel-border);
+    padding-top: 14px;
+    margin-top: auto;
+  }
+  .footer-mark .brand { text-transform: lowercase; letter-spacing: 0.2px; }
+  .footer-mark .brand span { color: var(--primary); }
+
+  /* componentes */
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+  }
+  .card.on-white { background: #fff; }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .badge-success { background: var(--success-bg); color: var(--success); }
+  .badge-warning { background: var(--warning-bg); color: var(--warning); }
+  .badge-danger  { background: var(--danger-bg);  color: var(--danger); }
+  .badge-neutral { background: #eef2f7; color: var(--text-dim); }
+  .badge-primary { background: #eff4ff; color: var(--primary); border: 1px solid var(--panel-border-strong); }
+
+  .list-check { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .list-check li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 15.5px;
+    line-height: 1.45;
+  }
+  .list-check .ico-wrap {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--success-bg);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .list-check.blue .ico-wrap { background: #eff4ff; }
+  .list-check.warn .ico-wrap { background: var(--warning-bg); }
+
+  /* pipeline horizontal */
+  .pipeline {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 18px 0;
+  }
+  .pipe-step {
+    flex: 1;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius-sm);
+    padding: 16px 14px;
+    text-align: center;
+    position: relative;
+  }
+  .pipe-step.active { background: #eff4ff; border-color: var(--panel-border-strong); }
+  .pipe-step .num {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--primary); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800;
+    margin: 0 auto 8px;
+  }
+  .pipe-step .name { font-size: 13.5px; font-weight: 800; color: var(--text); }
+  .pipe-step .desc { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+  .pipe-arrow {
+    display: flex; align-items: center; justify-content: center;
+    width: 28px; flex-shrink: 0;
+    color: var(--panel-border-strong);
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  /* tabela */
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead th {
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--panel-border);
+  }
+  tbody td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--panel-border);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+
+  /* colunas de trilha */
+  .track {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    flex: 1;
+  }
+  .track h3 {
+    font-size: 15px;
+    font-weight: 800;
+    margin: 0 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .track ol { margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.7; }
+  .track ol li strong { color: var(--primary); }
+
+  /* ---------- IMPRESSÃO / PDF ---------- */
+  @media print {
+    body { background: #fff; }
+    .howto { display: none; }
+    .stage { padding: 0; gap: 0; }
+    .slide {
+      box-shadow: none;
+      border-radius: 0;
+      page-break-after: always;
+      break-after: page;
+      width: var(--slide-w);
+      height: var(--slide-h);
+    }
+    .slide:last-child { page-break-after: auto; }
+  }
+
+  @page {
+    size: 1280px 720px;
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="howto no-print">
+  <div>
+    <h3>Exportar como PDF (formato apresentação 16:9)</h3>
+    <p>
+      <code>Cmd/Ctrl + P</code> → destino <code>Salvar como PDF</code> → escala <code>100%</code>,
+      sem cabeçalhos/rodapés. O tamanho de página já está fixado em 1280×720px — equivalente a um slide
+      16:9 de PowerPoint/Keynote.
+    </p>
+  </div>
+  <button class="btn-primary" onclick="window.print()">Exportar / Imprimir PDF</button>
+</div>
+
+<div class="stage">
+
+  <!-- SLIDE 1 — CAPA -->
+  <section class="slide">
+    <div class="slide-topbar">
+      <span class="kicker"><span class="dot"></span>Forge-SDD · financeiro</span>
+      <span class="slide-index">1 / 9</span>
+    </div>
+    <div class="spacer" style="flex:0.3;"></div>
+    <h1>Pipeline de desenvolvimento com IA<br>do projeto financeiro</h1>
+    <p class="lead">Como uma ideia vira feature entregue: papéis, comandos e artefatos do ciclo Forge-SDD usado neste repositório.</p>
+    <div class="spacer"></div>
+    <div class="footer-mark">
+      <span class="brand">nathanramorim <span>· financeiro</span></span>
+      <span>sdd/HOWTO.md · sdd/README.md · CLAUDE.md</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 — VISÃO GERAL DO PIPELINE -->
+  <section class="slide">
+    <div class="slide-topbar">
+      <span class="kicker"><span class="dot"></span>Visão geral</span>
+      <span class="slide-index">2 / 9</span>
+    </div>
+    <h2>Da ideia à entrega: 5 etapas</h2>
+    <p class="lead">Cada seta é um comando (<code>/slash</code>) disparado manualmente pelo desenvolvedor.</p>
+
+    <div class="pipeline" style="margin-top: 28px;">
+      <div class="pipe-step active">
+        <div class="num">1</div>
+        <div class="name">/constitution</div>
+        <div class="desc">arquitetura e regras</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step active">
+        <div class="num">2</div>
+        <div class="name">/discovery</div>
+        <div class="desc">visão de produto</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step active">
+        <div class="num">3</div>
+        <div class="name">/nova-feature</div>
+        <div class="desc">tarefa no roadmap</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step active">
+        <div class="num">4</div>
+        <div class="name">/proxima-feature</div>
+        <div class="desc">branch + código</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step active">
+        <div class="num">5</div>
+        <div class="name">/revisar</div>
+        <div class="desc">PR pronto</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 12px;">
+      <p style="margin:0;">Comandos universais rodam <strong>a qualquer momento</strong> do pipeline: <code>/status</code> (onde parei), <code>/doctor</code> (agente perdido) e <code>/archive</code> (progress.md grande).</p>
+    </div>
+    <div class="spacer"></div>
+    <div class="footer-mark"><span class="brand">nathanramorim <span>· financeiro</span></span><span>sdd/README.md</span></div>
+  </section>
+
+  <!-- SLIDE 3 — CICLO DE VIDA POR COMANDO -->
+  <section class="slide">
+    <div class="slide-topbar">
+      <span class="kicker"><span class="dot"></span>Protocolo interno</span>
+      <span class="slide-index">3 / 9</span>
+    </div>
+    <h2>Ciclo de vida executado por todo agente</h2>
+    <p class="lead">Independente do comando disparado, o agente segue sempre a mesma sequência de 5 passos (<code>CLAUDE.md</code>).</p>
+
+    <div class="pipeline" style="margin-top: 24px;">
+      <div class="pipe-step">
+        <div class="num">1</div>
+        <div class="name">READ-MIN</div>
+        <div class="desc">lê progress.md + lessons.md</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <div class="num">2</div>
+        <div class="name">PLAN</div>
+        <div class="desc">reporta intenção, aguarda ok</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <div class="num">3</div>
+        <div class="name">ACT</div>
+        <div class="desc">executa no escopo do papel</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <div class="num">4</div>
+        <div class="name">WRITE</div>
+        <div class="desc">edita só arquivos do escopo</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <div class="num">5</div>
+        <div class="name">CLOSE</div>
+        <div class="desc">progress + telemetria + archive</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 12px;">
+      <p style="margin:0;">No passo <strong>PLAN</strong>, o agente também decide se a tarefa deve ser delegada a um subagente: varredura/pesquisa extensa → tende a sim; edição pontual e pequena → tende a não. Decisão final é sempre do usuário.</p>
+    </div>
+    <div class="spacer"></div>
+    <div class="footer-mark"><span class="brand">nathanramorim <span>· financeiro</span></span><span>CLAUDE.md — Lifecycle</span></div>
+  </section>
+
+  <!-- SLIDE 4 — PAPÉIS (RESPONSABILIDADE ÚNICA) -->
+  <section class="slide">
+    <div class="slide-topbar">
+      <span class="kicker"><span class="dot"></span>Papéis</span>
+      <span class="slide-index">4 / 9</span>
+    </div>
+    <h2>Um papel, um artefato</h2>
+    <p class="lead">Regra rígida: cada papel só escreve o tipo de arquivo sob sua responsabilidade — sem sobreposição.</p>
+
+    <table style="margin-top: 20px;">
+      <thead>
+        <tr><th>Papel</th><th>Escreve</th><th>Aparece em <code>agent_path</code></th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge badge-primary">Orquestrador</span></td>
+          <td>progress.md, telemetria, coordenação entre papéis</td>
+          <td>sempre presente</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-primary">Specifier</span></td>
+          <td>specs (discovery, features, critérios)</td>
+          <td>fase de planejamento</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-primary">Builder</span></td>
+          <td>código de produção e testes</td>
+          <td>fase de execução</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-primary">Revisor</span></td>
+          <td>relatório de revisão, aprovação/rejeição</td>
+          <td>fase de fechamento</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card" style="margin-top: 18px;">
+      <p style="margin:0;">Exemplo real medido: a sessão de <code>fix-5a01-correcao-adicao-despesas</code> registrou <code>agent_path: [orquestrador, builder]</code> — sem revisor nessa execução específica.</p>
+    </div>
+    <div class="spacer"></div>
+    <div class="footer-mark"><span class="brand">nathanramorim <span>· financeiro</span></span><span>CLAUDE.md — Regras</span></div>
+  </section>
+
+  <!-- SLIDE 5 — TRILHAS (NOVO x EXISTENTE) -->
+  <section class="slide">
+    <div class="slide-topbar">
+      <span class="kicker"><span class="dot"></span>Duas trilhas de entrada</span>
+      <span class="slide-index">5 / 9</span>
+    </div>
+    <h2>Novo projeto vs. projeto existente</h2>
+
+    <div class="body-row" style="margin-top: 16px;">
+      <div class="track">
+        <h3>🆕 Novo projeto (do zero)</h3>
+        <ol>
+          <li><strong>/constitution</strong> — propõe arquitetura e regras</li>
+          <li><strong>/discovery</strong> "ideia" — gera visão de produto em <code>sdd/discovery/</code></li>
+          <li><strong>/nova-feature</strong> — cria tarefas no roadmap</li>
+          <li><strong>/proxima-feature</strong> — cria branch e começa a codar</li>
+        </ol>
+      </div>
+      <div class="track">
+        <h3>🏗️ Projeto existente (adoção)</h3>
+        <ol>
+          <li><strong>/constitution</strong> — faz scan do codebase (package.json, src/, etc.)</li>
+          <li><strong>/status</strong> — mostra diagnóstico inicial</li>
+          <li><strong>/nova-feature</strong> — mapeia dívida técnica ou evolução</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 18px;">
+      <p style="margin:0;">O <strong>financeiro</strong> seguiu a trilha de adoção: <code>feat-00-foundation.md</code> e <code>feat-01-agente-financeiro-chat</code> vieram antes das 9 features/fixes incrementais atuais.</p>
+    </div>
+    <div class="spacer"></div>
+    <div class="footer-mark"><span class="brand">nathanramorim <span>· financeiro</span></span><span>sdd/HOWTO.md</span></div>
+  </section>
+
+  <!-- SLIDE 6 — ARTEFATOS CRÍTICOS -->
+  <section class="slide">
+    <div class="slide-topbar">
+      <span class="kicker"><span class="dot"></span>Artefatos críticos</span>
+      <span class="slide-index">6 / 9</span>
+    </div>
+    <h2>Onde o estado do projeto vive</h2>
+
+    <div class="body-row" style="margin-top: 20px;">
+      <div class="body-col">
+        <ul class="list-check blue">
+          <li>
+            <span class="ico-wrap"><svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="2" width="10" height="10" rx="2" fill="#2563eb"/></svg></span>
+            <span><code>sdd/memory/progress.md</code> — estado ativo, lido primeiro em toda sessão</span>
+          </li>
+          <li>
+            <span class="ico-wrap"><svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="2" width="10" height="10" rx="2" fill="#2563eb"/></svg></span>
+            <span><code>sdd/memory/constitution.md</code> — regras imutáveis do projeto</span>
+          </li>
+          <li>
+            <span class="ico-wrap"><svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="2" width="10" height="10" rx="2" fill="#2563eb"/></svg></span>
+            <span><code>sdd/memory/lessons.md</code> — padrões de erro já corrigidos (Builder e Revisor leem antes de agir)</span>
+          </li>
+        </ul>
+      </div>
+      <div class="body-col">
+        <ul class="list-check blue">
+          <li>
+            <span class="ico-wrap"><svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="2" width="10" height="10" rx="2" fill="#2563eb"/></svg></span>
+            <span><code>sdd/features/feat-XX-*.md</code> — tarefa atual (agrupada em subpastas por feature)</span>
+          </li>
+          <li>
+            <span class="ico-wrap"><svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="2" width="10" height="10" rx="2" fill="#2563eb"/></svg></span>
+            <span><code>.agents/rules/*.md</code> — regras de domínio (ex.: <code>design-system.md</code>) consultadas antes de mexer em UI</span>
+          </li>
+          <li>
+            <span class="ico-wrap"><svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="2" width="10" height="10" rx="2" fill="#2563eb"/></svg></span>
+            <span><code>sdd/.metrics/session-*.json</code> — telemetria gravada no CLOSE (se <code>telemetry.enabled</code>)</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="footer-mark"><span class="brand">nathanramorim <span>· financeiro</span></span><span>CLAUDE.md — Arquivos críticos</span></div>
+  </section>
+
+  <!-- SLIDE 7 — REGRAS DURAS -->
+  <section class="slide">
+    <div class="slide-topbar">
+      <span class="kicker"><span class="dot"></span>Guardrails</span>
+      <span class="slide-index">7 / 9</span>
+    </div>
+    <h2>Regras que não são negociáveis</h2>
+
+    <ul class="list-check warn" style="margin-top: 24px;">
+      <li>
+        <span class="ico-wrap"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 4v3.5" stroke="#d97706" stroke-width="1.6" stroke-linecap="round"/><circle cx="7" cy="9.8" r="0.9" fill="#d97706"/></svg></span>
+        <span><strong>Nunca commitar direto em <code>main</code></strong> — todo trabalho passa por branch de feature/fix.</span>
+      </li>
+      <li>
+        <span class="ico-wrap"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 4v3.5" stroke="#d97706" stroke-width="1.6" stroke-linecap="round"/><circle cx="7" cy="9.8" r="0.9" fill="#d97706"/></svg></span>
+        <span><strong>Consultar <code>constitution.md</code></strong> antes de qualquer decisão arquitetural.</span>
+      </li>
+      <li>
+        <span class="ico-wrap"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 4v3.5" stroke="#d97706" stroke-width="1.6" stroke-linecap="round"/><circle cx="7" cy="9.8" r="0.9" fill="#d97706"/></svg></span>
+        <span><strong>Ler antes de editar</strong> — nenhuma alteração sem antes usar a ferramenta de leitura no arquivo.</span>
+      </li>
+      <li>
+        <span class="ico-wrap"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 4v3.5" stroke="#d97706" stroke-width="1.6" stroke-linecap="round"/><circle cx="7" cy="9.8" r="0.9" fill="#d97706"/></svg></span>
+        <span><strong>Responsabilidade única por artefato</strong> — Specifier escreve specs, Builder escreve código, etc.</span>
+      </li>
+      <li>
+        <span class="ico-wrap"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 4v3.5" stroke="#d97706" stroke-width="1.6" stroke-linecap="round"/><circle cx="7" cy="9.8" r="0.9" fill="#d97706"/></svg></span>
+        <span><strong>Orçamentos de tamanho</strong> — <code>progress.md</code> ≤ 1 KB; resposta de planejamento ≤ 500 tokens (detalhe vai para <code>sdd/skills/</code>).</span>
+      </li>
+    </ul>
+    <div class="spacer"></div>
+    <div class="footer-mark"><span class="brand">nathanramorim <span>· financeiro</span></span><span>CLAUDE.md — Regras / Orçamentos</span></div>
+  </section>
+
+  <!-- SLIDE 8 — PIPELINE APLICADO AO FINANCEIRO -->
+  <section class="slide">
+    <div class="slide-topbar">
+      <span class="kicker"><span class="dot"></span>Aplicado ao financeiro</span>
+      <span class="slide-index">8 / 9</span>
+    </div>
+    <h2>10 features já percorreram este pipeline</h2>
+    <p class="lead">Todas com status <code>done</code> em <code>sdd/memory/progress.md</code>, cada uma em sua própria branch.</p>
+
+    <table style="margin-top: 16px;">
+      <thead>
+        <tr><th>Feature</th><th>Tipo</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>feat-01-agente-financeiro-chat</td><td>feature</td><td><span class="badge badge-success">done</span></td></tr>
+        <tr><td>fix-5a01 · fix-5b01 · fix-5d01</td><td>fix</td><td><span class="badge badge-success">done</span></td></tr>
+        <tr><td>feat-5c01-botoes-confirmacao-ui</td><td>feature</td><td><span class="badge badge-success">done</span></td></tr>
+        <tr><td>feat-6e01-relatorio-graficos-categoria</td><td>feature</td><td><span class="badge badge-success">done</span></td></tr>
+        <tr><td>fix-6f01 · fix-7a01 · fix-8b01</td><td>fix</td><td><span class="badge badge-success">done</span></td></tr>
+        <tr><td>feat-9c01-design-system-mobile-first</td><td>feature</td><td><span class="badge badge-success">done</span></td></tr>
+      </tbody>
+    </table>
+    <div class="spacer"></div>
+    <div class="footer-mark"><span class="brand">nathanramorim <span>· financeiro</span></span><span>sdd/memory/progress.md</span></div>
+  </section>
+
+  <!-- SLIDE 9 — FECHAMENTO -->
+  <section class="slide">
+    <div class="slide-topbar">
+      <span class="kicker"><span class="dot"></span>Resumo</span>
+      <span class="slide-index">9 / 9</span>
+    </div>
+    <h2>Em uma frase</h2>
+    <div class="card" style="margin: 20px 0 24px;">
+      <p style="font-size: 21px; font-weight: 700; line-height: 1.5; margin: 0;">
+        O Forge-SDD transforma "quero criar X" em código revisado através de 5 comandos
+        (<span style="color:var(--primary);">constitution → discovery → nova-feature → proxima-feature → revisar</span>),
+        com cada agente seguindo sempre <span style="color:var(--primary);">READ-MIN → PLAN → ACT → WRITE → CLOSE</span>.
+      </p>
+    </div>
+    <div class="card on-white" style="border-color: var(--panel-border-strong);">
+      <p style="margin:0;">Próximo passo natural: manter <code>telemetry.enabled</code> ativo no CLOSE para que cada passagem pelo pipeline também fique medida em tokens e tempo (ver relatório de consumo de IA).</p>
+    </div>
+    <div class="spacer"></div>
+    <div class="footer-mark"><span class="brand">nathanramorim <span>· financeiro</span></span><span>fim</span></div>
+  </section>
+
+</div>
+</body>
+</html>

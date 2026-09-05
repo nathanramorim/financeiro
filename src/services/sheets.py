@@ -2,6 +2,7 @@ import os
 import gspread
 from google.oauth2.service_account import Credentials
 from src.config import GOOGLE_SHEETS_CREDENTIALS_FILE, GOOGLE_SHEET_NAME
+from src.tools.math_tool import MathTool
 
 EXPECTED_STRUCTURE = {
     "Despesas": ["Descrição", "Valor", "Tipo", "Categoria", "Data"],
@@ -73,25 +74,32 @@ class SheetsService:
                 print(f"[SheetsService Error] Erro ao verificar cabeçalhos da aba '{title}': {e}")
 
     def get_expenses(self, tipo_filtro: str = None) -> list[dict]:
+        records = []
         if self.sheet:
             try:
                 worksheet = self.sheet.worksheet("Despesas")
-                records = worksheet.get_all_records()
-                if tipo_filtro:
-                    return [r for r in records if r.get("Tipo", "").lower() == tipo_filtro.lower()]
-                return records
+                records = worksheet.get_all_records(numericise_ignore=['all'])
             except Exception as e:
                 print(f"[SheetsService Error] Erro ao ler despesas: {e}")
-        
-        records = self._in_memory_db["Despesas"]
+                records = self._in_memory_db["Despesas"]
+        else:
+            records = self._in_memory_db["Despesas"]
+
+        sanitized = []
+        for r in records:
+            item = dict(r)
+            item["Valor"] = MathTool.parse_float(item.get("Valor", 0))
+            sanitized.append(item)
+
         if tipo_filtro:
-            return [r for r in records if r.get("Tipo", "").lower() == tipo_filtro.lower()]
-        return records
+            return [r for r in sanitized if str(r.get("Tipo", "")).lower() == tipo_filtro.lower()]
+        return sanitized
 
     def add_expense(self, descricao: str, valor: float, tipo: str = "fixa", categoria: str = "Outros", data: str = "2026-09-04") -> dict:
+        valor_parsed = MathTool.parse_float(valor)
         item = {
             "Descrição": descricao,
-            "Valor": float(valor),
+            "Valor": valor_parsed,
             "Tipo": tipo,
             "Categoria": categoria,
             "Data": data
@@ -99,7 +107,7 @@ class SheetsService:
         if self.sheet:
             try:
                 worksheet = self.sheet.worksheet("Despesas")
-                worksheet.append_row([descricao, valor, tipo, categoria, data])
+                worksheet.append_row([descricao, valor_parsed, tipo, categoria, data])
             except Exception as e:
                 print(f"[SheetsService Error] Erro ao cadastrar despesa: {e}")
 
@@ -107,25 +115,36 @@ class SheetsService:
         return item
 
     def get_incomes(self) -> list[dict]:
+        records = []
         if self.sheet:
             try:
                 worksheet = self.sheet.worksheet("Receitas")
-                return worksheet.get_all_records()
+                records = worksheet.get_all_records(numericise_ignore=['all'])
             except Exception as e:
                 print(f"[SheetsService Error] Erro ao ler receitas: {e}")
+                records = self._in_memory_db["Receitas"]
+        else:
+            records = self._in_memory_db["Receitas"]
 
-        return self._in_memory_db["Receitas"]
+        sanitized = []
+        for r in records:
+            item = dict(r)
+            item["Valor"] = MathTool.parse_float(item.get("Valor", 0))
+            sanitized.append(item)
+
+        return sanitized
 
     def add_income(self, descricao: str, valor: float, data: str = "2026-09-04") -> dict:
+        valor_parsed = MathTool.parse_float(valor)
         item = {
             "Descrição": descricao,
-            "Valor": float(valor),
+            "Valor": valor_parsed,
             "Data": data
         }
         if self.sheet:
             try:
                 worksheet = self.sheet.worksheet("Receitas")
-                worksheet.append_row([descricao, valor, data])
+                worksheet.append_row([descricao, valor_parsed, data])
             except Exception as e:
                 print(f"[SheetsService Error] Erro ao cadastrar receita: {e}")
 
@@ -136,8 +155,8 @@ class SheetsService:
         expenses = self.get_expenses()
         incomes = self.get_incomes()
 
-        total_expenses = sum(float(e.get("Valor", 0)) for e in expenses)
-        total_incomes = sum(float(i.get("Valor", 0)) for i in incomes)
+        total_expenses = sum(MathTool.parse_float(e.get("Valor", 0)) for e in expenses)
+        total_incomes = sum(MathTool.parse_float(i.get("Valor", 0)) for i in incomes)
         balance = total_incomes - total_expenses
 
         return {
