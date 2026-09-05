@@ -25,8 +25,10 @@ main
 │  └─ feat-d206-revisao-guardrail-novos-agentes [done]
 ├─ fix/e107-respostas-conceitos-financeiros-llm-fallback (COMPLETED)
 │  └─ fix-e107-respostas-conceitos-financeiros-llm-fallback [done]
-└─ fix/b208-sugestoes-input-chat (COMPLETED)
-   └─ fix-b208-sugestoes-input-chat [done]
+├─ fix/b208-sugestoes-input-chat (COMPLETED)
+│  └─ fix-b208-sugestoes-input-chat [done]
+└─ feat/c309-readme-banner-gif-arquitetura (COMPLETED)
+   └─ feat-c309-readme-banner-gif-arquitetura [done]
 ```
 
 ## Índice
@@ -49,3 +51,4 @@ main
 | d206 | `feat-d206-revisao-guardrail-novos-agentes.md` | `feat/d206-revisao-guardrail-novos-agentes` | 1 | done |
 | e107 | `fix-e107-respostas-conceitos-financeiros-llm-fallback.md` | `fix/e107-respostas-conceitos-financeiros-llm-fallback` | 1 | done |
 | b208 | `fix-b208-sugestoes-input-chat.md` | `fix/b208-sugestoes-input-chat` | 1 | done |
+| c309 | `feat-c309-readme-banner-gif-arquitetura.md` | `feat/c309-readme-banner-gif-arquitetura` | 1 | done |
