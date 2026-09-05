@@ -64,6 +64,62 @@ O sistema foi desenhado de forma moderna, modular e de fácil manutenção:
   <img src="docs/assets/arquitetura.png" alt="Arquitetura Multiagente Financeiro" width="100%" style="border-radius: 14px; border: 1px solid #e4e9f0;" />
 </div>
 
+```text
+┌────────────────────────────────────────────────────────────────────────┐
+│                          USUÁRIO / NAVEGADOR                           │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ HTTP / JSON (:3020)
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                     FRONTEND (Next.js 15 — :3020)                      │
+│   • Interface Mobile-First          • Renderização Markdown & Badges   │
+│   • Chips de Sugestões Rápidas      • Gráficos Determinísticos SVG     │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ REST POST /api/chat (:8000)
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                      BACKEND (FastAPI — :8000)                         │
+│                                                                        │
+│   ┌────────────────────────────────────────────────────────────────┐   │
+│   │                    GUARDRAIL VALIDATOR                         │   │
+│   │   • Validação de escopo estritamente financeiro                │   │
+│   │   • Bloqueio de injeções de prompt e assuntos fora de contexto │   │
+│   └───────────────────────────────┬────────────────────────────────┘   │
+│                                   │ Mensagem Aprovada                  │
+│                                   ▼                                    │
+│   ┌────────────────────────────────────────────────────────────────┐   │
+│   │                       AGENT ROUTER                             │   │
+│   │   • Analisa a intenção e calcula afinidade de cada especialista│   │
+│   │   • Despacha para o especialista com maior score (BaseAgent)   │   │
+│   └───────────────────────────────┬────────────────────────────────┘   │
+│                                   │                                    │
+│               ┌───────────────────┼───────────────────┐                │
+│               ▼                   ▼                   ▼                │
+│      ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐       │
+│      │TransactionAgent │ │   ReportAgent   │ │  AdvisoryAgent  │       │
+│      │ • Entradas/Saídas │ • Balanço geral │ │ • Regra 50/30/20│       │
+│      │ • Categorização │ │ • Gráficos SVG  │ │ • Consultoria   │       │
+│      └────────┬────────┘ └────────┬────────┘ └────────┬────────┘       │
+│               │                   │                   │                │
+│               └─────────┬─────────┴─────────┬─────────┘                │
+│                         ▼                   ▼                          │
+│                ┌─────────────────┐ ┌─────────────────┐                 │
+│                │ BudgetGoalAgent │ │  GeneralAgent   │                 │
+│                │ • Metas poupança│ │ • Conceitos     │                 │
+│                │ • Prazos & plano│ │ • MathTool      │                 │
+│                └────────┬────────┘ └────────┬────────┘                 │
+└─────────────────────────┼───────────────────┼──────────────────────────┘
+                          │                   │
+             ┌────────────┴─────────┐         │
+             ▼                      ▼         ▼
+    ┌──────────────────┐   ┌───────────────────────────┐
+    │  Google Sheets   │   │      OpenRouter LLM       │
+    │  • Persistência  │   │  • Modelo Ling Flash Fin  │
+    │  • Cache TTL 30s │   │  • Failover em cascata    │
+    │  • Extrato real  │   │  • Base local offline     │
+    └──────────────────┘   └───────────────────────────┘
+```
+
 ### O ciclo de uma mensagem em 4 passos simples:
 1. **Interface (Next.js 15):** Você acessa pelo navegador (celular ou computador na porta `3020`) com visual limpo, botões rápidos e gráficos interativos.
 2. **API & Validação (FastAPI + Guardrail):** A requisição chega à API na porta `8000`. O `GuardrailValidator` verifica se o assunto é financeiro e seguro.
@@ -150,6 +206,7 @@ Para quem quer mergulhar a fundo ou estender o sistema:
 - 🧭 [Guia dos Agentes para Leigos](docs/guia_agentes_para_leigos.md) — Explicação completa de personas, vocabulário e como cada agente responde.
 - 🛠️ [Como Criar Novos Agentes](docs/criando_novos_agentes.md) — Tutorial com código para plugar novos especialistas sem alterar as rotas existentes.
 - 🔄 [Fluxo da Arquitetura Multiagente](docs/fluxo_arquitetura_multiagente.md) — Diagramas técnicos detalhados de sequência e dependências.
+- 📘 [Guia de Criação de READMEs Atraentes](docs/guia_criacao_readme_amigavel.md) — Passo a passo para criar READMEs amigáveis, com diagramas no estilo Claude Code e demonstrações em GIF.
 
 ---
 

@@ -435,33 +435,13 @@ HTML_ARQUITETURA = """<!DOCTYPE html>
   <meta charset="UTF-8">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #ffffff;
-      --panel: #f6f8fb;
-      --panel-border: #e4e9f0;
-      --panel-border-strong: #bfd3f5;
-      --text: #0f172a;
-      --text-dim: #5b6675;
-      --primary: #2563eb;
-      --success: #16a34a;
-      --success-bg: #dcfce7;
-      --warning: #d97706;
-      --warning-bg: #fef3c7;
-      --accent-indigo: #4f46e5;
-      --accent-violet: #7c3aed;
-      --radius: 14px;
-      --radius-sm: 8px;
-      --radius-pill: 999px;
-      --font: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: var(--font);
-      background: #f1f5f9;
-      color: var(--text);
+      background: #090d16;
+      color: #e2e8f0;
+      font-family: 'JetBrains Mono', monospace;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -470,281 +450,142 @@ HTML_ARQUITETURA = """<!DOCTYPE html>
       -webkit-font-smoothing: antialiased;
     }
 
-    .diagram-container {
-      width: 1200px;
-      background: #ffffff;
-      border: 1px solid var(--panel-border);
-      border-radius: 20px;
-      box-shadow: 0 12px 36px rgba(15, 23, 42, 0.06);
-      padding: 40px 48px;
+    .terminal-card {
+      width: 1120px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
     }
 
-    .diagram-header {
-      text-align: center;
-      margin-bottom: 36px;
+    .terminal-topbar {
+      background: #1e293b;
+      padding: 12px 18px;
+      border-bottom: 1px solid #334155;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    .eyebrow {
-      display: inline-flex;
+
+    .terminal-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+
+    .terminal-title {
+      font-size: 13px;
+      color: #94a3b8;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .terminal-badge {
       font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: var(--primary);
-      background: #eff4ff;
-      border: 1px solid var(--panel-border-strong);
-      padding: 5px 14px;
-      border-radius: var(--radius-pill);
-      margin-bottom: 12px;
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 3px 10px;
+      border-radius: 999px;
     }
-    .diagram-header h2 {
-      font-size: 28px;
-      font-weight: 900;
-      color: var(--text);
-      letter-spacing: -0.6px;
-      margin-bottom: 6px;
+
+    .terminal-body {
+      padding: 28px 36px 32px 36px;
+      overflow-x: auto;
     }
-    .diagram-header p {
-      font-size: 15px;
-      color: var(--text-dim);
+
+    pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.45;
+      color: #cbd5e1;
       font-weight: 500;
     }
 
-    /* 4-Stage Horizontal Pipeline */
-    .pipeline-grid {
-      display: grid;
-      grid-template-columns: 240px 40px 240px 40px 330px 40px 210px;
-      align-items: center;
-    }
-
-    .stage-card {
-      background: var(--panel);
-      border: 1px solid var(--panel-border);
-      border-radius: var(--radius);
-      padding: 20px;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .stage-card.highlight {
-      background: #ffffff;
-      border: 1.5px solid var(--primary);
-      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.08);
-    }
-
-    .stage-badge {
-      display: inline-flex;
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: var(--radius-pill);
-      margin-bottom: 12px;
-      align-self: flex-start;
-    }
-    .stage-badge.blue { background: #eff4ff; color: var(--primary); }
-    .stage-badge.green { background: var(--success-bg); color: var(--success); }
-    .stage-badge.amber { background: var(--warning-bg); color: var(--warning); }
-    .stage-badge.indigo { background: #eef2ff; color: var(--accent-indigo); }
-
-    .stage-title {
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--text);
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .stage-desc {
-      font-size: 12px;
-      color: var(--text-dim);
-      line-height: 1.5;
-      margin-bottom: 14px;
-    }
-
-    .stage-footer {
-      border-top: 1px solid var(--panel-border);
-      padding-top: 10px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--text-dim);
-      font-weight: 600;
-    }
-
-    /* Arrow Connectors */
-    .arrow-col {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: var(--panel-border-strong);
-      font-size: 24px;
-      font-weight: 900;
-    }
-
-    /* Specialists Vertical Stack inside Stage 3 */
-    .specialists-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .spec-item {
-      background: #ffffff;
-      border: 1px solid var(--panel-border);
-      border-radius: var(--radius-sm);
-      padding: 9px 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-    }
-    .spec-name {
-      font-weight: 700;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .spec-role {
-      font-size: 10px;
-      color: var(--text-dim);
-      background: var(--panel);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-weight: 600;
-    }
-
-    /* Footer Legend */
-    .diagram-footer {
-      margin-top: 32px;
-      padding-top: 20px;
-      border-top: 1px solid var(--panel-border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-      color: var(--text-dim);
-    }
-    .legend-row {
-      display: flex;
-      gap: 16px;
-    }
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 600;
-    }
-    .legend-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
+    .hi-blue { color: #38bdf8; font-weight: 700; }
+    .hi-green { color: #4ade80; font-weight: 700; }
+    .hi-amber { color: #fbbf24; font-weight: 700; }
+    .hi-purple { color: #c084fc; font-weight: 700; }
+    .hi-muted { color: #64748b; }
   </style>
 </head>
 <body>
-  <div class="diagram-container">
-    <div class="diagram-header">
-      <div class="eyebrow">Arquitetura de Ponta a Ponta</div>
-      <h2>Fluxo de Execução Multiagente</h2>
-      <p>Do clique do usuário no Next.js à persistência determinística no Google Sheets</p>
+  <div class="terminal-card">
+    <div class="terminal-topbar">
+      <div class="terminal-dots">
+        <div class="dot dot-red"></div>
+        <div class="dot dot-yellow"></div>
+        <div class="dot dot-green"></div>
+      </div>
+      <div class="terminal-title">fluxo-arquitetura.txt — Visão Geral do Sistema Multiagente</div>
+      <div class="terminal-badge">Clean Architecture</div>
     </div>
-
-    <div class="pipeline-grid">
-      <!-- 1. Frontend -->
-      <div class="stage-card">
-        <div>
-          <span class="stage-badge blue">1. Interface</span>
-          <div class="stage-title">📱 Next.js 15</div>
-          <div class="stage-desc">
-            Dashboard mobile-first com chat interativo, sugestões rápidas, renderização rica em markdown e gráficos SVG nativos.
-          </div>
-        </div>
-        <div class="stage-footer">Porta :3020</div>
-      </div>
-
-      <div class="arrow-col">➔</div>
-
-      <!-- 2. API & Segurança -->
-      <div class="stage-card">
-        <div>
-          <span class="stage-badge amber">2. Gateway & Validação</span>
-          <div class="stage-title">🛡️ FastAPI + Guardrail</div>
-          <div class="stage-desc">
-            Endpoints REST desacoplados. O <code>GuardrailValidator</code> filtra injeções e bloqueia tópicos não financeiros antes do processamento.
-          </div>
-        </div>
-        <div class="stage-footer">Porta :8000</div>
-      </div>
-
-      <div class="arrow-col">➔</div>
-
-      <!-- 3. Roteamento & Especialistas -->
-      <div class="stage-card highlight">
-        <div>
-          <span class="stage-badge indigo">3. Malha Multiagente</span>
-          <div class="stage-title">🧭 AgentRouter</div>
-          <div class="stage-desc" style="margin-bottom: 10px;">
-            Calcula afinidade e direciona ao agente ideal:
-          </div>
-
-          <div class="specialists-stack">
-            <div class="spec-item">
-              <span class="spec-name">💳 TransactionAgent</span>
-              <span class="spec-role">Lançamentos</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-name">📊 ReportAgent</span>
-              <span class="spec-role">Balanço</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-name">💡 AdvisoryAgent</span>
-              <span class="spec-role">Consultoria</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-name">🎯 BudgetGoalAgent</span>
-              <span class="spec-role">Metas</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-name">📚 GeneralAgent</span>
-              <span class="spec-role">Conceitos</span>
-            </div>
-          </div>
-        </div>
-        <div class="stage-footer" style="margin-top: 10px;">BaseAgent Plug-and-Play</div>
-      </div>
-
-      <div class="arrow-col">➔</div>
-
-      <!-- 4. Dados e LLM -->
-      <div class="stage-card">
-        <div>
-          <span class="stage-badge green">4. Serviços & Dados</span>
-          <div class="stage-title">📦 Integrações</div>
-          <div class="stage-desc">
-            Execução de ferramentas determinísticas (cálculo e persistência real) + inteligência generativa com failover.
-          </div>
-          <div style="font-size: 12px; line-height: 1.6; color: var(--text); font-weight: 500; margin-top: 6px;">
-            • <strong>Google Sheets</strong> (Backup/Cache)<br>
-            • <strong>OpenRouter API</strong> (LLM)<br>
-            • <strong>MathTool</strong> (Cálculo exato)
-          </div>
-        </div>
-        <div class="stage-footer">gspread + httpx</div>
-      </div>
-    </div>
-
-    <!-- Rodapé -->
-    <div class="diagram-footer">
-      <div>Desenvolvido com foco em alta performance, clareza visual e separação estrita de responsabilidades.</div>
-      <div class="legend-row">
-        <div class="legend-item"><span class="legend-dot" style="background: var(--primary)"></span> Frontend</div>
-        <div class="legend-item"><span class="legend-dot" style="background: var(--warning)"></span> Segurança</div>
-        <div class="legend-item"><span class="legend-dot" style="background: var(--accent-indigo)"></span> Multiagente</div>
-        <div class="legend-item"><span class="legend-dot" style="background: var(--success)"></span> Dados</div>
-      </div>
+    <div class="terminal-body">
+      <pre>
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                                 <span class="hi-blue">USUÁRIO / NAVEGADOR</span>                                    │
+└───────────────────────────────────────────┬────────────────────────────────────────────┘
+                                            │ <span class="hi-muted">HTTP / JSON (:3020)</span>
+                                            ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                             <span class="hi-blue">FRONTEND (Next.js 15 — :3020)</span>                              │
+│   • <span class="hi-muted">Interface Mobile-First</span>                    • <span class="hi-muted">Renderização Markdown & Badges</span>         │
+│   • <span class="hi-muted">Chips de Sugestões Rápidas</span>                • <span class="hi-muted">Gráficos Determinísticos SVG</span>           │
+└───────────────────────────────────────────┬────────────────────────────────────────────┘
+                                            │ <span class="hi-muted">REST POST /api/chat (:8000)</span>
+                                            ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                              <span class="hi-amber">BACKEND (FastAPI — :8000)</span>                                 │
+│                                                                                        │
+│   ┌────────────────────────────────────────────────────────────────────────────────┐   │
+│   │                            <span class="hi-amber">GUARDRAIL VALIDATOR</span>                                 │   │
+│   │   • <span class="hi-muted">Validação de escopo estritamente financeiro</span>                                │   │
+│   │   • <span class="hi-muted">Bloqueio de injeções de prompt e assuntos fora de contexto</span>                 │   │
+│   └───────────────────────────────────────┬────────────────────────────────────────┘   │
+│                                           │ <span class="hi-green">Mensagem Aprovada</span>                          │
+│                                           ▼                                            │
+│   ┌────────────────────────────────────────────────────────────────────────────────┐   │
+│   │                               <span class="hi-purple">AGENT ROUTER</span>                                     │   │
+│   │   • <span class="hi-muted">Analisa a intenção e calcula afinidade de cada especialista</span>                │   │
+│   │   • <span class="hi-muted">Despacha para o especialista com maior score (BaseAgent)</span>                   │   │
+│   └───────────────────────────────────────┬────────────────────────────────────────┘   │
+│                                           │                                            │
+│                 ┌─────────────────────────┼─────────────────────────┐                  │
+│                 ▼                         ▼                         ▼                  │
+│        ┌──────────────────┐      ┌──────────────────┐      ┌──────────────────┐        │
+│        │ <span class="hi-blue">TransactionAgent</span> │      │   <span class="hi-blue">ReportAgent</span>    │      │  <span class="hi-blue">AdvisoryAgent</span>   │        │
+│        │ • <span class="hi-muted">Entradas/Saídas</span>│      │ • <span class="hi-muted">Balanço geral</span>  │      │ • <span class="hi-muted">Regra 50/30/20</span> │        │
+│        │ • <span class="hi-muted">Categorização</span>  │      │ • <span class="hi-muted">Gráficos SVG</span>   │      │ • <span class="hi-muted">Consultoria</span>    │        │
+│        └────────┬─────────┘      └────────┬─────────┘      └────────┬─────────┘        │
+│                 │                         │                         │                  │
+│                 └────────────┬────────────┴────────────┬────────────┘                  │
+│                              ▼                         ▼                               │
+│                     ┌──────────────────┐      ┌──────────────────┐                     │
+│                     │ <span class="hi-blue">BudgetGoalAgent</span>  │      │   <span class="hi-blue">GeneralAgent</span>   │                     │
+│                     │ • <span class="hi-muted">Metas poupança</span> │      │ • <span class="hi-muted">Conceitos Selic</span>│                     │
+│                     │ • <span class="hi-muted">Prazos & plano</span> │      │ • <span class="hi-muted">MathTool (exato)</span>│                    │
+│                     └────────┬─────────┘      └────────┬─────────┘                     │
+└──────────────────────────────┼─────────────────────────┼───────────────────────────────┘
+                               │                         │
+                 ┌─────────────┴───────────┐             │
+                 ▼                         ▼             ▼
+       ┌───────────────────┐     ┌───────────────────────────────────┐
+       │   <span class="hi-green">Google Sheets</span>   │     │          <span class="hi-purple">OpenRouter LLM</span>           │
+       │   • <span class="hi-muted">Persistência</span>  │     │   • <span class="hi-muted">Modelo Ling 3.0 Flash Fin</span>       │
+       │   • <span class="hi-muted">Cache TTL 30s</span> │     │   • <span class="hi-muted">Failover em cascata</span>            │
+       │   • <span class="hi-muted">Extrato real</span>  │     │   • <span class="hi-muted">Base local offline</span>              │
+       └───────────────────┘     └───────────────────────────────────┘
+      </pre>
     </div>
   </div>
 </body>
@@ -778,13 +619,13 @@ async def main():
 
         # 2. Renderizar Arquitetura
         context2 = await browser.new_context(
-            viewport={"width": 1264, "height": 720},
+            viewport={"width": 1264, "height": 840},
             device_scale_factor=2
         )
         page2 = await context2.new_page()
         await page2.set_content(HTML_ARQUITETURA, wait_until="networkidle")
         await asyncio.sleep(1)
-        container2 = page2.locator(".diagram-container")
+        container2 = page2.locator(".terminal-card")
         await container2.screenshot(path=str(arquitetura_png))
         print(f"Arquitetura renderizada em: {arquitetura_png}")
         await context2.close()
