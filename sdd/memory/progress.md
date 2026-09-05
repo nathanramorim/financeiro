@@ -6,19 +6,19 @@ Fase 1 — Agente Chat [X] concluído
 Fase 2 — API FastAPI + Next.js [X] concluído
 Multiagente [X] feat-e4b1 (4 features) concluído
 Documentação & Prompts [X] feat-f105 concluído
+Revisão Guardrail [X] feat-d206 concluído
 ```
 
 ## Features ativas
 | Feature | Branch | Status |
 |---------|--------|--------|
-| feat-f105-guia-multiagente-leigos-e-arquitetura | feat/f105-guia-multiagente-leigos-e-arquitetura | done |
+| feat-d206-revisao-guardrail-novos-agentes | feat/d206-revisao-guardrail-novos-agentes | done |
 
 ## Próximo passo
-- `feat-f105` concluído com sucesso:
-  - Prompts especializados centralizados em `src/agent/prompts.py` e associados aos agentes.
-  - Criados `docs/guia_agentes_para_leigos.md`, `docs/criando_novos_agentes.md` e `docs/fluxo_arquitetura_multiagente.md`.
-- 54 testes unitários e de integração passando (`uv run pytest`).
+- `feat-d206` concluído:
+  - Expandida lista `FINANCIAL_KEYWORDS` em `src/guardrail/rules.py` cobrindo metas (`BudgetGoal`), consultoria (`Advisory`) e mercado (`GeneralFinancial`).
+  - Suíte `tests/test_guardrail.py` expandida e validada (58 testes no total passando via `uv run pytest`).
 - Pronto para revisão (comando `/revisar`).
 
 ## Handoff da última sessão
-- Finalizada documentação para leigos, desenvolvedores e fluxo visual completo da arquitetura multiagente.
+- Guardrail 100% calibrado para suportar perguntas conceituais, dicas orçamentárias e metas sem números explícitos.

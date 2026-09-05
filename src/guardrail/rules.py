@@ -1,11 +1,30 @@
 FINANCIAL_KEYWORDS = [
+    # 1. Transações, contas e categorias básicas (TransactionAgent)
     "despesa", "despesas", "receita", "receitas", "saldo", "extrato", "gasto",
-    "gastos", "fixa", "fixas", "variável", "variaveis", "aluguel", "condomínio",
-    "supermercado", "luz", "água", "internet", "salário", "pagamento", "dividir",
-    "multiplicar", "categoria", "categorizar", "finanças", "orçamento", "banco",
-    "dinheiro", "cartão", "parcela", "fatura", "economia", "guardar", "investimento",
-    "r$", "reais", "valor", "conta", "contas", "relatorio", "relatório", "grafico",
-    "graficos", "gráfico", "gráficos", "balanço", "balanco"
+    "gastos", "gastando", "fixa", "fixas", "variável", "variaveis", "aluguel",
+    "condomínio", "condominio", "supermercado", "mercado", "luz", "água", "agua",
+    "internet", "salário", "salario", "pagamento", "dividir", "multiplicar",
+    "categoria", "categorizar", "finanças", "financas", "banco", "dinheiro",
+    "cartão", "cartao", "parcela", "parcelas", "fatura", "faturas", "r$", "reais",
+    "valor", "conta", "contas", "comprar", "comprei", "paguei", "recebi",
+
+    # 2. Relatórios e consolidados analíticos (ReportAgent)
+    "relatorio", "relatório", "grafico", "graficos", "gráfico", "gráficos",
+    "balanço", "balanco", "resumo financeiro", "quanto sobrou",
+
+    # 3. Metas de economia e tetos orçamentários (BudgetGoalAgent)
+    "meta", "metas", "poupar", "poupança", "poupanca", "guardar", "reserva",
+    "teto", "alvo", "budget", "objetivo financeiro",
+
+    # 4. Consultoria financeira e boas práticas (AdvisoryAgent)
+    "dica", "dicas", "conselho", "conselhos", "planejamento", "economizar",
+    "economia", "orçamento", "orcamento", "cortar", "50/30/20", "superávit",
+    "superavit", "déficit", "deficit", "dívida", "divida", "dívidas", "dividas",
+
+    # 5. Mercado, investimentos e conceitos (GeneralFinancialAgent)
+    "investimento", "investimentos", "investir", "rendimento", "rentabilidade",
+    "selic", "cdi", "juros", "inflação", "inflacao", "tesouro", "aporte",
+    "aportes", "resgate"
 ]
 
 OUT_OF_SCOPE_MSG = (

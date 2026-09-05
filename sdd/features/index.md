@@ -19,8 +19,10 @@ main
 │  ├─ feat-e4b1-02-agentes-especializados [done]
 │  ├─ feat-e4b1-03-supervisor-router-api [done]
 │  └─ feat-e4b1-04-guia-extensibilidade [done]
-└─ feat/f105-guia-multiagente-leigos-e-arquitetura (COMPLETED)
-   └─ feat-f105-guia-multiagente-leigos-e-arquitetura [done]
+├─ feat/f105-guia-multiagente-leigos-e-arquitetura (COMPLETED)
+│  └─ feat-f105-guia-multiagente-leigos-e-arquitetura [done]
+└─ feat/d206-revisao-guardrail-novos-agentes (COMPLETED)
+   └─ feat-d206-revisao-guardrail-novos-agentes [done]
 ```
 
 ## Índice
@@ -40,3 +42,4 @@ main
 | e4b1-03 | `feat-e4b1-arquitetura-api-multiagente/feat-e4b1-03-supervisor-router-api.md` | `feat/e4b1-arquitetura-api-multiagente` | 3 | done |
 | e4b1-04 | `feat-e4b1-arquitetura-api-multiagente/feat-e4b1-04-guia-extensibilidade.md` | `feat/e4b1-arquitetura-api-multiagente` | 4 | done |
 | f105 | `feat-f105-guia-multiagente-leigos-e-arquitetura.md` | `feat/f105-guia-multiagente-leigos-e-arquitetura` | 1 | done |
+| d206 | `feat-d206-revisao-guardrail-novos-agentes.md` | `feat/d206-revisao-guardrail-novos-agentes` | 1 | done |
