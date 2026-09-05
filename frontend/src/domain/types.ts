@@ -24,6 +24,8 @@ export interface ChatMessageResponse {
   pending_action?: PendingAction | null;
   is_report?: boolean;
   report_data?: ReportData | null;
+  agent_name?: string | null;
+  suggested_actions?: string[] | null;
 }
 
 export interface TransactionItem {
@@ -63,5 +65,7 @@ export interface Message {
   pendingAction?: PendingAction | null;
   isReport?: boolean;
   reportData?: ReportData | null;
+  agentName?: string | null;
+  suggestedActions?: string[] | null;
   timestamp: Date;
 }

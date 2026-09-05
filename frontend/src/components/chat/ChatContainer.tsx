@@ -11,18 +11,36 @@ interface ChatContainerProps {
   onDataChanged?: () => void;
 }
 
+interface SuggestionItem {
+  label: string;
+  cmd: string;
+}
+
+const DEFAULT_SUGGESTIONS: SuggestionItem[] = [
+  { label: "📊 Relatório Geral", cmd: "relatorio" },
+  { label: "💰 Consultar Saldo", cmd: "qual o meu saldo atual?" },
+  { label: "💡 Como Economizar?", cmd: "como posso economizar dinheiro este mês?" },
+  { label: "🎯 Meta de Poupança", cmd: "minha meta é poupar R$ 1000 este mês" },
+  { label: "➕ Add Despesa", cmd: "Add despesa Mercado R$ 150" },
+  { label: "🏦 O que é Taxa Selic?", cmd: "o que é taxa selic?" },
+  { label: "🧮 Dividir Despesas", cmd: "dividir por 2 minhas despesas fixas" },
+];
+
 export const ChatContainer: React.FC<ChatContainerProps> = ({ onDataChanged }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
       sender: "assistant",
-      text: "Olá! 👋 Sou seu assistente financeiro pessoal.\nPosso consultar seu saldo, registrar despesas/receitas, categorizar gastos e gerar relatórios completos com gráficos.",
+      text: "Olá! 👋 Sou seu assistente financeiro pessoal.\nPosso consultar seu saldo, registrar despesas/receitas, categorizar gastos, oferecer dicas e gerar relatórios completos com gráficos.",
       timestamp: new Date(),
     },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [suggestions, setSuggestions] = useState<SuggestionItem[]>(DEFAULT_SUGGESTIONS);
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -31,6 +49,11 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ onDataChanged }) =
   useEffect(() => {
     scrollToBottom();
   }, [messages, loading]);
+
+  const handleSelectSuggestion = (cmd: string) => {
+    setInput(cmd);
+    inputRef.current?.focus();
+  };
 
   const handleSend = async (textToSend?: string) => {
     const messageText = (textToSend || input).trim();
@@ -63,10 +86,26 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ onDataChanged }) =
         pendingAction: res.pending_action,
         isReport: res.is_report,
         reportData: res.report_data,
+        agentName: res.agent_name,
+        suggestedActions: res.suggested_actions,
         timestamp: new Date(),
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
+
+      // Atualiza sugestões contextuais se o agente retornou ações recomendadas
+      if (res.suggested_actions && res.suggested_actions.length > 0) {
+        const contextual: SuggestionItem[] = res.suggested_actions.map((act) => ({
+          label: act,
+          cmd: act,
+        }));
+        const seen = new Set(contextual.map((c) => c.cmd.toLowerCase()));
+        const merged = [
+          ...contextual,
+          ...DEFAULT_SUGGESTIONS.filter((d) => !seen.has(d.cmd.toLowerCase())),
+        ];
+        setSuggestions(merged);
+      }
     } catch (err: unknown) {
       const errMsg = err instanceof Error ? err.message : "Não foi possível processar.";
       const errorMessage: Message = {
@@ -96,13 +135,6 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ onDataChanged }) =
     }
   };
 
-  const quickActions = [
-    { label: "📊 Relatório Geral", cmd: "relatorio" },
-    { label: "💰 Consultar Saldo", cmd: "qual o meu saldo atual?" },
-    { label: "📋 Despesas Fixas", cmd: "listar despesas fixas" },
-    { label: "➕ Add Despesa", cmd: "Add despesa Mercado 150" },
-  ];
-
   return (
     <div className="flex flex-col h-[75vh] sm:h-[680px] bg-white rounded-card border border-panel-border shadow-sm overflow-hidden">
       {/* Messages Scroll Area */}
@@ -121,15 +153,19 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ onDataChanged }) =
 
       {/* Quick Action Chips (Mobile-friendly horizontal scroll) */}
       <div className="px-4 py-2 bg-panel border-t border-panel-border flex items-center gap-1.5 overflow-x-auto no-scrollbar text-xs">
-        <span className="text-[11px] text-text-dim font-medium shrink-0">Sugestões:</span>
-        {quickActions.map((action) => (
+        <span className="text-[11px] text-text-dim font-medium shrink-0 flex items-center gap-1">
+          <span>💡</span> Sugestões:
+        </span>
+        {suggestions.map((action) => (
           <button
             key={action.cmd}
-            onClick={() => handleSend(action.cmd)}
+            type="button"
+            onClick={() => handleSelectSuggestion(action.cmd)}
             disabled={loading}
-            className="px-2.5 py-1 bg-white hover:bg-slate-50 border border-panel-border text-text rounded-pill whitespace-nowrap transition-colors shadow-2xs font-medium cursor-pointer"
+            title="Clique para preencher na área de digitação"
+            className="px-2.5 py-1 bg-white hover:bg-slate-50 border border-panel-border text-text rounded-pill whitespace-nowrap transition-colors shadow-2xs font-medium cursor-pointer flex items-center gap-1 hover:border-primary/40 active:scale-95"
           >
-            {action.label}
+            <span>{action.label}</span>
           </button>
         ))}
       </div>
@@ -143,6 +179,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ onDataChanged }) =
         className="p-3 sm:p-4 bg-white border-t border-panel-border flex items-center gap-2"
       >
         <input
+          ref={inputRef}
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
