@@ -61,8 +61,10 @@ Nos bastidores, você não fala com um robô genérico, mas com uma **equipe esp
 O sistema foi desenhado de forma moderna, modular e de fácil manutenção:
 
 <div align="center">
-  <img src="docs/assets/arquitetura.png" alt="Arquitetura Multiagente Financeiro" width="100%" style="border-radius: 14px; border: 1px solid #e4e9f0;" />
+  <img src="docs/assets/arquitetura.png" alt="Arquitetura Multiagente Financeiro" width="100%" style="border-radius: 14px; border: 1px solid #1f2430;" />
 </div>
+
+> 📐 **Visualizador Interativo Dark/SVG:** Abra [`docs/arquitetura.html`](docs/arquitetura.html) no navegador para inspecionar os diagramas vetoriais SVG de alta precisão (*1 · O mapa das peças* e *2 · O caminho de uma pergunta*).
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
