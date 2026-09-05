@@ -66,6 +66,14 @@ O sistema foi desenhado de forma moderna, modular e de fácil manutenção:
 
 > 📐 **Visualizador Interativo Dark/SVG:** Abra [`docs/arquitetura.html`](docs/arquitetura.html) no navegador para inspecionar os diagramas vetoriais SVG de alta precisão (*1 · O mapa das peças* e *2 · O caminho de uma pergunta*).
 
+<br />
+
+<div align="center">
+  <img src="docs/assets/arquitetura_terminal.png" alt="Arquitetura Terminal Claude Code" width="100%" style="border-radius: 14px; border: 1px solid #232a3b;" />
+</div>
+
+> 💻 **Visualizador Terminal Claude Code:** Também disponível em formato standalone HTML em [`docs/arquitetura_terminal.html`](docs/arquitetura_terminal.html).
+
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
 │                          USUÁRIO / NAVEGADOR                           │
