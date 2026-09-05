@@ -1,5 +1,6 @@
 from typing import Optional
 from src.agent.base import BaseAgent, AgentContext, AgentResult
+from src.agent.prompts import ADVISORY_AGENT_PROMPT
 from src.tools.expenses import ExpenseTool
 from src.tools.income import IncomeTool
 from src.tools.math_tool import MathTool
@@ -12,6 +13,7 @@ class AdvisoryAgent(BaseAgent):
             name="advisory_agent",
             description="Especialista em diagnóstico financeiro, regra 50/30/20, metas de economia e orientação orçamentária."
         )
+        self.system_prompt = ADVISORY_AGENT_PROMPT
         self.expense_tool = expense_tool or ExpenseTool()
         self.income_tool = income_tool or IncomeTool()
 

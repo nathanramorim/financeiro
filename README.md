@@ -18,10 +18,13 @@ O projeto adota uma arquitetura desacoplada e Clean Architecture:
       - `AdvisoryAgent`: Consultoria financeira, regra 50/30/20 e diagnóstico de economia.
       - `GeneralFinancialAgent`: Dúvidas conceituais, operações aritméticas e fallback.
       - `BudgetGoalAgent`: Metas de economia e acompanhamento orçamentário.
-      - *(Veja [docs/multiagent_guide.md](docs/multiagent_guide.md) para criar novos agentes plug-and-play)*.
     - `src/guardrail/`: Filtro rigoroso de escopo financeiro contra prompts fora de contexto.
     - `src/services/`: Integração com Google Sheets com cache TTL de 30s.
     - `src/tools/`: `MathTool` e `CategoryTool` para operações sem alucinações.
+- **Documentação de Referência:**
+  - 🧭 [Guia dos Agentes para Leigos](docs/guia_agentes_para_leigos.md) — Quem é cada agente, o que faz e frases de exemplo.
+  - 🛠️ [Tutorial: Criando Novos Agentes](docs/criando_novos_agentes.md) — Passo a passo para criar e plugar novos especialistas.
+  - 🔄 [Fluxo Completo da Arquitetura](docs/fluxo_arquitetura_multiagente.md) — Diagramas Mermaid e ciclo de vida da requisição.
 - **Frontend (Next.js 15 / TypeScript / Tailwind CSS):**
   - Localizado em `frontend/` (porta padrão `3020`).
   - Estruturado em App Router, componentes do Design System (`components/ui/`), componentes de domínio (`components/chat/`, `components/transactions/`, `components/reports/`) e cliente HTTP tipado (`infrastructure/api.ts`).

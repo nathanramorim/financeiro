@@ -14,11 +14,13 @@ main
 │  ├─ feat-a102-02-nextjs-foundation [done]
 │  ├─ feat-a102-03-nextjs-chat-charts [done]
 │  └─ feat-a102-04-cutover-homologacao [done]
-└─ feat/e4b1-arquitetura-api-multiagente (COMPLETED)
-   ├─ feat-e4b1-01-core-multiagente [done]
-   ├─ feat-e4b1-02-agentes-especializados [done]
-   ├─ feat-e4b1-03-supervisor-router-api [done]
-   └─ feat-e4b1-04-guia-extensibilidade [done]
+├─ feat/e4b1-arquitetura-api-multiagente (COMPLETED)
+│  ├─ feat-e4b1-01-core-multiagente [done]
+│  ├─ feat-e4b1-02-agentes-especializados [done]
+│  ├─ feat-e4b1-03-supervisor-router-api [done]
+│  └─ feat-e4b1-04-guia-extensibilidade [done]
+└─ feat/f105-guia-multiagente-leigos-e-arquitetura (COMPLETED)
+   └─ feat-f105-guia-multiagente-leigos-e-arquitetura [done]
 ```
 
 ## Índice
@@ -37,3 +39,4 @@ main
 | e4b1-02 | `feat-e4b1-arquitetura-api-multiagente/feat-e4b1-02-agentes-especializados.md` | `feat/e4b1-arquitetura-api-multiagente` | 2 | done |
 | e4b1-03 | `feat-e4b1-arquitetura-api-multiagente/feat-e4b1-03-supervisor-router-api.md` | `feat/e4b1-arquitetura-api-multiagente` | 3 | done |
 | e4b1-04 | `feat-e4b1-arquitetura-api-multiagente/feat-e4b1-04-guia-extensibilidade.md` | `feat/e4b1-arquitetura-api-multiagente` | 4 | done |
+| f105 | `feat-f105-guia-multiagente-leigos-e-arquitetura.md` | `feat/f105-guia-multiagente-leigos-e-arquitetura` | 1 | done |

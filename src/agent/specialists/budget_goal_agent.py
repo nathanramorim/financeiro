@@ -1,6 +1,7 @@
 import re
 from typing import Optional
 from src.agent.base import BaseAgent, AgentContext, AgentResult
+from src.agent.prompts import BUDGET_GOAL_AGENT_PROMPT
 from src.tools.income import IncomeTool
 from src.tools.expenses import ExpenseTool
 from src.tools.math_tool import MathTool
@@ -16,6 +17,7 @@ class BudgetGoalAgent(BaseAgent):
             name="budget_goal_agent",
             description="Especialista em definição de metas de economia, tetos orçamentários e acompanhamento de poupança."
         )
+        self.system_prompt = BUDGET_GOAL_AGENT_PROMPT
         self.income_tool = income_tool or IncomeTool()
         self.expense_tool = expense_tool or ExpenseTool()
 

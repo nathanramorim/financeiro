@@ -3,7 +3,7 @@ import requests
 from typing import Optional
 from src.agent.base import BaseAgent, AgentContext, AgentResult
 from src.config import OPENROUTER_API_KEY, OPENROUTER_BASE_URL, OPENROUTER_MODEL
-from src.agent.prompts import SYSTEM_PROMPT
+from src.agent.prompts import SYSTEM_PROMPT, GENERAL_AGENT_PROMPT
 from src.tools.math_tool import MathTool
 from src.tools.expenses import ExpenseTool
 
@@ -20,6 +20,7 @@ class GeneralFinancialAgent(BaseAgent):
             name="general_agent",
             description="Especialista em conceitos financeiros gerais, operações matemáticas e fallback resiliente."
         )
+        self.system_prompt = GENERAL_AGENT_PROMPT
         self.api_key = api_key or "mock_key"
         self.model = model
         self.base_url = OPENROUTER_BASE_URL

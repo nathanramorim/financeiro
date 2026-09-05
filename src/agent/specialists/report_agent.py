@@ -1,5 +1,6 @@
 from typing import Optional
 from src.agent.base import BaseAgent, AgentContext, AgentResult
+from src.agent.prompts import REPORT_AGENT_PROMPT
 from src.tools.expenses import ExpenseTool
 from src.tools.income import IncomeTool
 from src.tools.category import CategoryTool
@@ -13,6 +14,7 @@ class ReportAgent(BaseAgent):
             name="report_agent",
             description="Especialista em consolidação analítica, saldos líquidos, relatórios e métricas de categorias."
         )
+        self.system_prompt = REPORT_AGENT_PROMPT
         self.expense_tool = expense_tool or ExpenseTool()
         self.income_tool = income_tool or IncomeTool()
 

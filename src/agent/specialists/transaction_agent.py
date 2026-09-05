@@ -1,6 +1,7 @@
 import re
 from typing import Optional
 from src.agent.base import BaseAgent, AgentContext, AgentResult
+from src.agent.prompts import TRANSACTION_AGENT_PROMPT
 from src.tools.expenses import ExpenseTool
 from src.tools.income import IncomeTool
 from src.tools.category import CategoryTool
@@ -14,6 +15,7 @@ class TransactionAgent(BaseAgent):
             name="transaction_agent",
             description="Especialista em detecção, parsing, validação e execução de receitas e despesas financeiras."
         )
+        self.system_prompt = TRANSACTION_AGENT_PROMPT
         self.expense_tool = expense_tool or ExpenseTool()
         self.income_tool = income_tool or IncomeTool()
 
