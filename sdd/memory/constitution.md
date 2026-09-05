@@ -6,9 +6,14 @@ Sistema inteligente de gestão de finanças pessoais via chat web, com validaç�
 ## Stack
 | Camada | Escolha | Motivo |
 |--------|---------|--------|
-| Runtime | python (>=3.11) | Ecossistema maduro para IA, manipulação de dados e automação |
-| Package Manager | uv | Gerenciador rápido de dependências, ambiente virtual e pacotes Python |
-| Interface UI | streamlit | Interface de Web Chat responsiva e prototipagem ágil em Python |
+| Runtime Backend | python (>=3.11) | Ecossistema maduro para IA, manipulação de dados e automação |
+| Backend Framework | fastapi | API RESTful assíncrona, robusta, tipada e documentada |
+| Runtime Frontend | node.js (>=20) | Ambiente estável e moderno para a interface web |
+| Frontend Framework | next.js (App Router) | Interface moderna, modular, suporte a Tailwind CSS e performance mobile-first |
+| Styling UI | tailwindcss | Conformidade estrita com o Design System da organização (`.agents/rules/design-system.md`) |
+| Package Manager Backend | uv | Gerenciador rápido de dependências, ambiente virtual e pacotes Python |
+| Package Manager Frontend | npm | Gerenciador padrão e estável para ecossistema Node.js / React |
+| Interface Prototipagem | streamlit | Interface legada mantida para testes comparativos em Python |
 | Gateway LLM | openrouter | Acesso unificado a diversos provedores de modelos de linguagem |
 | Persistência | google-sheets | Armazenamento acessível e prático para despesas fixas, receitas e saldo |
 | Integração Sheets | gspread / google-auth | Biblioteca Python oficial e estável para integração OAuth/Service Account com Google Sheets |
@@ -16,11 +21,13 @@ Sistema inteligente de gestão de finanças pessoais via chat web, com validaç�
 ## Decisões resolvidas
 | Decisão | Resolução |
 |---------|-----------|
-| Package Manager `uv` | Uso obrigatório e exclusivo de `uv` para gestão de pacotes, ambiente virtual e execução (`uv run`, `uv pip`, `uv sync`) |
+| Arquitetura Desacoplada | Backend em FastAPI expondo rotas REST e Frontend em Next.js com App Router |
+| Package Manager `uv` | Uso obrigatório e exclusivo de `uv` para gestão de pacotes Python, ambiente virtual e execução (`uv run`, `uv pip`, `uv sync`) |
 | OpenRouter Gateway | Centralização do acesso a modelos LLM |
 | Guardrail na entrada | Filtragem de prompts fora de contexto antes do envio à LLM |
 | Calculadora dedicada | Operações matemáticas executadas em código Python (MathTool) para evitar alucinações |
 | Persistência no Google Sheets | Leitura e gravação de despesas e receitas em planilhas Google |
+| Mobile-First Obrigatório | Todas as telas, botões e gráficos do frontend devem ser responsivos desde 360px |
 
 ## Ferramentas e Integrações
 | Campo | Valor |
@@ -34,7 +41,7 @@ Consulte `sdd/memory/mcps.md` para o status real de cada MCP configurado (`ativo
 2. Nível de Linguagem: padrão
 3. Sem commits diretos em main
 4. Branch por feature
-5. Uso obrigatório de `uv` para gerenciamento de dependências, ambiente virtual e execução de comandos (`uv venv`, `uv run`, `uv pip`, `uv add`)
+5. Uso obrigatório de `uv` para gerenciamento de dependências, ambiente virtual e execução de comandos Python (`uv venv`, `uv run`, `uv pip`, `uv add`)
 6. Guardrail obrigatório antes de qualquer processamento principal da LLM
 7. Nenhuma operação aritmética deve depender de texto livre da LLM; utilizar ferramenta matemática dedicada (MathTool)
 8. Config centralizado em módulo de configuração e secrets em `.env` (nunca commitados)
