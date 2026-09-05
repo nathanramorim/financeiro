@@ -74,20 +74,29 @@ def get_transactions(agent: FinancialAgent = Depends(get_agent)):
     tot_receitas = sum(MathTool.parse_float(i.get("Valor", 0)) for i in incomes)
     saldo = tot_receitas - tot_despesas
 
+    from src.tools.category import CategoryTool
     cat_dict = {}
     for e in expenses:
-        cat = e.get("Categoria") or "Outros"
+        cat = e.get("Categoria")
+        if not cat or str(cat).strip().lower() in ["", "outros", "none", "geral"]:
+            inferred = CategoryTool.categorize(e.get("Descrição", ""))
+            cat = inferred if inferred else "Outros"
         val = MathTool.parse_float(e.get("Valor", 0))
         cat_dict[cat] = cat_dict.get(cat, 0.0) + val
 
-    fixed_items = [
-        TransactionItem(
-            descricao=e.get("Descrição", "Sem descrição"),
-            valor=MathTool.parse_float(e.get("Valor", 0)),
-            tipo=e.get("Tipo", "fixa"),
-            categoria=e.get("Categoria", "Geral")
-        ) for e in expenses
-    ]
+    fixed_items = []
+    for e in expenses:
+        cat = e.get("Categoria")
+        if not cat or str(cat).strip().lower() in ["", "outros", "none", "geral"]:
+            cat = CategoryTool.categorize(e.get("Descrição", "")) or "Outros"
+        fixed_items.append(
+            TransactionItem(
+                descricao=e.get("Descrição", "Sem descrição"),
+                valor=MathTool.parse_float(e.get("Valor", 0)),
+                tipo=e.get("Tipo", "fixa"),
+                categoria=cat
+            )
+        )
 
     income_items = [
         TransactionItem(

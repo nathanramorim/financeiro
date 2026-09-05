@@ -183,9 +183,13 @@ class FinancialAgent:
         tot_receitas = sum(MathTool.parse_float(i.get("Valor", 0)) for i in incomes)
         saldo = tot_receitas - tot_despesas
 
+        from src.tools.category import CategoryTool
         cat_dict = {}
         for e in expenses:
-            cat = e.get("Categoria") or "Outros"
+            cat = e.get("Categoria")
+            if not cat or str(cat).strip().lower() in ["", "outros", "none"]:
+                inferred = CategoryTool.categorize(e.get("Descrição", ""))
+                cat = inferred if inferred else "Outros"
             val = MathTool.parse_float(e.get("Valor", 0))
             cat_dict[cat] = cat_dict.get(cat, 0.0) + val
 

@@ -13,6 +13,7 @@ wheels/
 node_modules/
 .next/
 out/
+.cache/
 
 # Secrets & Credentials (NEVER COMMIT)
 .env

@@ -4,20 +4,20 @@
 ```
 Fase 1 — Agente Financeiro Chat [X] concluído
 Fase 2 — Migração API FastAPI + Frontend Next.js [X] concluído
-Correções [X] fix-b103 concluído
+Correções [X] fix-b103 [X] fix-c104 concluídos
 ```
 
 ## Features ativas
 | Feature | Branch | Status |
 |---------|--------|--------|
-| fix-b103-renderizacao-markdown-relatorio | fix/b103-renderizacao-markdown-relatorio | done |
+| fix-c104-correcao-categorias-relatorio | fix/c104-correcao-categorias-relatorio | done |
 
 ## Próximo passo
-- Fix `fix-b103-renderizacao-markdown-relatorio` concluído e aprovado.
-- Build Next.js compilado sem erros com `react-markdown` e `MarkdownRenderer`.
-- Suíte completa de testes aprovada.
+- Fix `fix-c104` concluído: cache TTL de 30s implementado no SheetsService, eliminando erro 429 de quota.
+- Todas as categorias (Moradia, Alimentação, Saúde, Transporte) agora aparecem corretamente no relatório e gráficos.
+- 34 testes unitários passando.
 - Pronto para revisão (comando `/revisar`).
 
 ## Handoff da última sessão
-- Criado componente `MarkdownRenderer.tsx` integrado ao `MessageBubble.tsx`.
-- Mensagens com cabeçalhos (`###`), negritos e listas de relatórios financeiros agora renderizam em HTML estilizado.
+- Implementado cache TTL e backup local contra erro 429 da API do Google Sheets.
+- Inferência automática de categoria no consolidado de relatórios.
