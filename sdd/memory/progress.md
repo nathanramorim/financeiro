@@ -4,21 +4,23 @@
 ```
 Fase 1 — Agente Chat [X] concluído
 Fase 2 — API FastAPI + Next.js [X] concluído
-Multiagente [X] feat-e4b1 (4 features) concluído
+Multiagente [X] feat-e4b1 concluído
 Documentação & Prompts [X] feat-f105 concluído
 Revisão Guardrail [X] feat-d206 concluído
+Fix Conceitos LLM [X] fix-e107 concluído
 ```
 
 ## Features ativas
 | Feature | Branch | Status |
 |---------|--------|--------|
-| feat-d206-revisao-guardrail-novos-agentes | feat/d206-revisao-guardrail-novos-agentes | done |
+| fix-e107-respostas-conceitos-financeiros-llm-fallback | fix/e107-respostas-conceitos-financeiros-llm-fallback | done |
 
 ## Próximo passo
-- `feat-d206` concluído:
-  - Expandida lista `FINANCIAL_KEYWORDS` em `src/guardrail/rules.py` cobrindo metas (`BudgetGoal`), consultoria (`Advisory`) e mercado (`GeneralFinancial`).
-  - Suíte `tests/test_guardrail.py` expandida e validada (58 testes no total passando via `uv run pytest`).
-- Pronto para revisão (comando `/revisar`).
+- `fix-e107` concluído:
+  - Modelo OpenRouter atualizado para `inclusionai/ling-3.0-flash-fin:free` (com failover em cascata).
+  - Base local implementada no `GeneralFinancialAgent` (Selic, CDI, Reserva, IPCA).
+  - 60 testes passando (`uv run pytest`).
+- Pronto para revisão (`/revisar`).
 
 ## Handoff da última sessão
-- Guardrail 100% calibrado para suportar perguntas conceituais, dicas orçamentárias e metas sem números explícitos.
+- Resolvido rate limit (429) do LLM anterior; perguntas conceituais (Selic, CDI) agora respondem com excelência online e offline.

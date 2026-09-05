@@ -87,3 +87,11 @@ def test_api_chat_guardrail_out_of_scope(client):
     assert data["agent_name"] == "guardrail"
     assert "fora do escopo" in data["response"]
     assert data["pending_action"] is None
+
+def test_api_chat_general_concept_routing(client):
+    response = client.post("/api/chat", json={"message": "o que é taxa selic?"})
+    assert response.status_code == 200
+    data = response.json()
+    assert data["agent_name"] == "general_agent"
+    assert "Selic" in data["response"] or "selic" in data["response"].lower()
+    assert "juros" in data["response"].lower()

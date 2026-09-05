@@ -119,9 +119,27 @@ def test_general_agent_math(mock_expense_tool):
 
 def test_general_agent_fallback():
     agent = GeneralFinancialAgent(api_key="")
-    res = agent.process(AgentContext(message="Olá, tudo bem?"))
+    res = agent.process(AgentContext(message="Mensagem sem conceito específico"))
     assert res.agent_name == "general_agent"
-    assert "Recebi sua mensagem" in res.reply
+    assert "assistente financeiro" in res.reply.lower()
+
+def test_general_agent_concepts_local_knowledge():
+    agent = GeneralFinancialAgent(api_key="")
+
+    # Selic
+    res_selic = agent.process(AgentContext(message="o que é taxa selic?"))
+    assert "Taxa Selic" in res_selic.reply
+    assert "Copom" in res_selic.reply
+
+    # CDI
+    res_cdi = agent.process(AgentContext(message="o que é cdi?"))
+    assert "CDI" in res_cdi.reply
+    assert "Certificado de Depósito Interbancário" in res_cdi.reply
+
+    # Reserva de Emergência
+    res_reserva = agent.process(AgentContext(message="como funciona a reserva de emergência?"))
+    assert "Reserva de Emergência" in res_reserva.reply
+    assert "3 a 6 meses" in res_reserva.reply
 
 # --- Testes do Agente de Extensão (BudgetGoalAgent) ---
 

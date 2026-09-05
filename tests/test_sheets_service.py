@@ -28,7 +28,7 @@ def test_income_tool_balance():
     income_tool = IncomeTool(sheets_service=service)
     balance = income_tool.get_balance()
     assert "saldo_liquido" in balance
-    assert balance["total_receitas"] >= balance["total_despesas"]
+    assert balance["saldo_liquido"] == round(balance["total_receitas"] - balance["total_despesas"], 2)
 
 def test_ensure_structure_creates_missing_worksheets():
     service = SheetsService(credentials_path="non_existent.json")

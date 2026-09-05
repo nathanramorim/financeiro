@@ -21,8 +21,10 @@ main
 │  └─ feat-e4b1-04-guia-extensibilidade [done]
 ├─ feat/f105-guia-multiagente-leigos-e-arquitetura (COMPLETED)
 │  └─ feat-f105-guia-multiagente-leigos-e-arquitetura [done]
-└─ feat/d206-revisao-guardrail-novos-agentes (COMPLETED)
-   └─ feat-d206-revisao-guardrail-novos-agentes [done]
+├─ feat/d206-revisao-guardrail-novos-agentes (COMPLETED)
+│  └─ feat-d206-revisao-guardrail-novos-agentes [done]
+└─ fix/e107-respostas-conceitos-financeiros-llm-fallback (COMPLETED)
+   └─ fix-e107-respostas-conceitos-financeiros-llm-fallback [done]
 ```
 
 ## Índice
@@ -43,3 +45,4 @@ main
 | e4b1-04 | `feat-e4b1-arquitetura-api-multiagente/feat-e4b1-04-guia-extensibilidade.md` | `feat/e4b1-arquitetura-api-multiagente` | 4 | done |
 | f105 | `feat-f105-guia-multiagente-leigos-e-arquitetura.md` | `feat/f105-guia-multiagente-leigos-e-arquitetura` | 1 | done |
 | d206 | `feat-d206-revisao-guardrail-novos-agentes.md` | `feat/d206-revisao-guardrail-novos-agentes` | 1 | done |
+| e107 | `fix-e107-respostas-conceitos-financeiros-llm-fallback.md` | `fix/e107-respostas-conceitos-financeiros-llm-fallback` | 1 | done |
