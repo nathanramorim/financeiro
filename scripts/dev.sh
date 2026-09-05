@@ -21,7 +21,7 @@ BACKEND_PID=$!
 sleep 2
 
 # 2. Inicia o frontend Next.js
-echo "💻 Iniciando Frontend Next.js na porta 3000..."
+echo "💻 Iniciando Frontend Next.js na porta 3020..."
 (cd frontend && npm run dev) &
 FRONTEND_PID=$!
 

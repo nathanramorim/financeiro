@@ -28,7 +28,7 @@ O projeto adota uma arquitetura desacoplada e Clean Architecture:
 ## 🚀 Como Executar
 
 ### 1. Inicialização Unificada (Recomendada)
-Para rodar simultaneamente o backend FastAPI na porta `8000` e o frontend Next.js na porta `3000`:
+Para rodar simultaneamente o backend FastAPI na porta `8000` e o frontend Next.js na porta `3020`:
 ```bash
 ./scripts/dev.sh
 ```
@@ -46,7 +46,7 @@ Documentação interativa Swagger disponível em: `http://localhost:8000/docs`
 cd frontend
 npm run dev
 ```
-Interface disponível em: `http://localhost:3000`
+Interface disponível em: `http://localhost:3020`
 
 #### Alternativa Streamlit:
 ```bash

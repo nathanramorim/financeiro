@@ -10,9 +10,10 @@ app = FastAPI(
 
 # Configuração de CORS para permitir acesso local do frontend Next.js
 origins = [
+    "http://localhost:3020",
+    "http://127.0.0.1:3020",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "http://localhost:3001",
     "*"
 ]
 
