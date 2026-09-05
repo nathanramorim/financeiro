@@ -2,22 +2,26 @@
 
 ## Status
 ```
-Fase 1 — Agente Financeiro Chat [X] concluído
-Fase 2 — Migração API FastAPI + Frontend Next.js [X] concluído
-Correções [X] fix-b103 [X] fix-c104 concluídos
+Fase 1 — Agente Chat [X] concluído
+Fase 2 — API FastAPI + Next.js [X] concluído
+Correções [X] b103 e c104 concluídos
+Multiagente [X] feat-e4b1 (4 features) concluído
 ```
 
 ## Features ativas
 | Feature | Branch | Status |
 |---------|--------|--------|
-| fix-c104-correcao-categorias-relatorio | fix/c104-correcao-categorias-relatorio | done |
+| feat-e4b1-arquitetura-api-multiagente | feat/e4b1-arquitetura-api-multiagente | done |
 
 ## Próximo passo
-- Fix `fix-c104` concluído: cache TTL de 30s implementado no SheetsService, eliminando erro 429 de quota.
-- Todas as categorias (Moradia, Alimentação, Saúde, Transporte) agora aparecem corretamente no relatório e gráficos.
-- 34 testes unitários passando.
-- Pronto para revisão (comando `/revisar`).
+- Todas as 4 features de `feat-e4b1` implementadas:
+  - `e4b1-01` (Core `BaseAgent`, `AgentRegistry`)
+  - `e4b1-02` (Especialistas: Transaction, Report, Advisory, General)
+  - `e4b1-03` (`AgentRouter` supervisor na API)
+  - `e4b1-04` (Extensão `BudgetGoalAgent`, guia e docs)
+- 54 testes passando (`uv run pytest`). Build Next.js aprovado.
+- Pronto para revisão (`/revisar`).
 
 ## Handoff da última sessão
-- Implementado cache TTL e backup local contra erro 429 da API do Google Sheets.
-- Inferência automática de categoria no consolidado de relatórios.
+- Backend convertido para arquitetura multiagente plug-and-play.
+- Criado `docs/multiagent_guide.md` e regras em `.agents/rules/arquitetura.md`.

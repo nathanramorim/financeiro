@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends
+from src.agent.router import AgentRouter
 from src.agent.engine import FinancialAgent
 from src.guardrail.validator import GuardrailValidator
 from src.tools.math_tool import MathTool
@@ -16,15 +17,15 @@ from src.api.schemas import (
 router = APIRouter()
 validator = GuardrailValidator()
 
-def get_agent() -> FinancialAgent:
-    return FinancialAgent()
+def get_agent() -> AgentRouter:
+    return AgentRouter()
 
 @router.get("/health")
 def health_check():
     return {"status": "ok", "app": "financeiro-api"}
 
 @router.post("/api/chat", response_model=ChatMessageResponse)
-def handle_chat(payload: ChatMessageRequest, agent: FinancialAgent = Depends(get_agent)):
+def handle_chat(payload: ChatMessageRequest, agent = Depends(get_agent)):
     # 1. Validação de Guardrail
     guardrail_result = validator.validate(payload.message)
     if not guardrail_result.is_valid:
@@ -33,9 +34,29 @@ def handle_chat(payload: ChatMessageRequest, agent: FinancialAgent = Depends(get
             pending_action=None,
             is_report=False,
             report_data=None,
+            agent_name="guardrail"
         )
 
-    # 2. Detecção de Intenção de Mutação (Confirmação interativa)
+    # 2. Se o agente for uma instância de AgentRouter (roteamento multiagente nativo)
+    if isinstance(agent, AgentRouter):
+        from src.agent.base import AgentContext
+        ctx = AgentContext(message=payload.message, history=payload.history or [])
+        res = agent.route(ctx)
+        
+        pending_obj = PendingAction(**res.pending_transaction) if res.pending_transaction else None
+        report_data_obj = ReportData(**res.report_data) if res.report_data else None
+        is_report = report_data_obj is not None or (hasattr(agent, "is_report_request") and agent.is_report_request(payload.message))
+        
+        return ChatMessageResponse(
+            response=res.reply,
+            pending_action=pending_obj,
+            is_report=is_report,
+            report_data=report_data_obj,
+            agent_name=res.agent_name,
+            suggested_actions=res.suggested_actions or None
+        )
+
+    # 3. Fallback / Mock compatível com testes legados
     pending = agent.detect_mutation_intent(payload.message)
     if pending:
         desc = pending.get("descricao", "Registro")
@@ -47,22 +68,22 @@ def handle_chat(payload: ChatMessageRequest, agent: FinancialAgent = Depends(get
             pending_action=pending_obj,
             is_report=False,
             report_data=None,
+            agent_name="transaction_agent"
         )
 
-    # 3. Verificação de Relatório e Gráficos
     is_report = agent.is_report_request(payload.message)
     report_data_obj = None
     if is_report:
         raw_rep = agent.generate_report_data()
         report_data_obj = ReportData(**raw_rep)
 
-    # 4. Processamento padrão do agente
     agent_response = agent.process_message(payload.message, payload.history)
     return ChatMessageResponse(
         response=agent_response,
         pending_action=None,
         is_report=is_report,
         report_data=report_data_obj,
+        agent_name="legacy_agent"
     )
 
 @router.get("/api/transactions", response_model=FinancialSummaryResponse)

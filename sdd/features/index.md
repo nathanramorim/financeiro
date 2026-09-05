@@ -9,11 +9,16 @@ main
 │  ├─ feat-01-02-openrouter-agent-math [done]
 │  ├─ feat-01-03-sheets-expenses-income [done]
 │  └─ feat-01-04-categorization-refinement [done]
-└─ feat/a102-migracao-api-nextjs (COMPLETED)
-   ├─ feat-a102-01-fastapi-backend [done]
-   ├─ feat-a102-02-nextjs-foundation [done]
-   ├─ feat-a102-03-nextjs-chat-charts [done]
-   └─ feat-a102-04-cutover-homologacao [done]
+├─ feat/a102-migracao-api-nextjs (COMPLETED)
+│  ├─ feat-a102-01-fastapi-backend [done]
+│  ├─ feat-a102-02-nextjs-foundation [done]
+│  ├─ feat-a102-03-nextjs-chat-charts [done]
+│  └─ feat-a102-04-cutover-homologacao [done]
+└─ feat/e4b1-arquitetura-api-multiagente (COMPLETED)
+   ├─ feat-e4b1-01-core-multiagente [done]
+   ├─ feat-e4b1-02-agentes-especializados [done]
+   ├─ feat-e4b1-03-supervisor-router-api [done]
+   └─ feat-e4b1-04-guia-extensibilidade [done]
 ```
 
 ## Índice
@@ -28,3 +33,7 @@ main
 | a102-02 | `feat-a102-migracao-api-nextjs/feat-a102-02-nextjs-foundation.md` | `feat/a102-migracao-api-nextjs` | 2 | done |
 | a102-03 | `feat-a102-migracao-api-nextjs/feat-a102-03-nextjs-chat-charts.md` | `feat/a102-migracao-api-nextjs` | 3 | done |
 | a102-04 | `feat-a102-migracao-api-nextjs/feat-a102-04-cutover-homologacao.md` | `feat/a102-migracao-api-nextjs` | 4 | done |
+| e4b1-01 | `feat-e4b1-arquitetura-api-multiagente/feat-e4b1-01-core-multiagente.md` | `feat/e4b1-arquitetura-api-multiagente` | 1 | done |
+| e4b1-02 | `feat-e4b1-arquitetura-api-multiagente/feat-e4b1-02-agentes-especializados.md` | `feat/e4b1-arquitetura-api-multiagente` | 2 | done |
+| e4b1-03 | `feat-e4b1-arquitetura-api-multiagente/feat-e4b1-03-supervisor-router-api.md` | `feat/e4b1-arquitetura-api-multiagente` | 3 | done |
+| e4b1-04 | `feat-e4b1-arquitetura-api-multiagente/feat-e4b1-04-guia-extensibilidade.md` | `feat/e4b1-arquitetura-api-multiagente` | 4 | done |

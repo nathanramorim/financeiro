@@ -8,20 +8,24 @@ Sistema inteligente de gestão de finanças pessoais via chat, com validação d
 
 O projeto adota uma arquitetura desacoplada e Clean Architecture:
 
-- **Backend (Python / FastAPI):**
+- **Backend (Python / FastAPI & Malha Multiagente):**
   - Gerenciado com `uv`.
-  - Módulos organizados em camadas:
+  - Módulos organizados em camadas (Clean Architecture):
     - `src/api/`: Rotas RESTful (`/api/chat`, `/api/transactions`, `/api/transactions/confirm`, `/api/reports`, `/health`).
-    - `src/agent/`: Orquestração do agente LLM com OpenRouter.
+    - `src/agent/`: Malha multiagente com `AgentRouter`, `AgentRegistry`, `BaseAgent` e catálogo de especialistas:
+      - `TransactionAgent`: Detecção e confirmação de receitas/despesas.
+      - `ReportAgent`: Agregação analítica, relatórios e dados para gráficos.
+      - `AdvisoryAgent`: Consultoria financeira, regra 50/30/20 e diagnóstico de economia.
+      - `GeneralFinancialAgent`: Dúvidas conceituais, operações aritméticas e fallback.
+      - `BudgetGoalAgent`: Metas de economia e acompanhamento orçamentário.
+      - *(Veja [docs/multiagent_guide.md](docs/multiagent_guide.md) para criar novos agentes plug-and-play)*.
     - `src/guardrail/`: Filtro rigoroso de escopo financeiro contra prompts fora de contexto.
-    - `src/services/`: Integração com Google Sheets via API oficial do Google.
-    - `src/tools/`: `MathTool` para operações aritméticas sem alucinações.
+    - `src/services/`: Integração com Google Sheets com cache TTL de 30s.
+    - `src/tools/`: `MathTool` e `CategoryTool` para operações sem alucinações.
 - **Frontend (Next.js 15 / TypeScript / Tailwind CSS):**
-  - Localizado em `frontend/`.
+  - Localizado em `frontend/` (porta padrão `3020`).
   - Estruturado em App Router, componentes do Design System (`components/ui/`), componentes de domínio (`components/chat/`, `components/transactions/`, `components/reports/`) e cliente HTTP tipado (`infrastructure/api.ts`).
   - Totalmente adaptado para Mobile-First (responsivo de 360px a 1440px).
-- **Interface de Fallback / Prototipagem (Streamlit):**
-  - Mantida em `src/app.py` para testes comparativos lado a lado.
 
 ---
 

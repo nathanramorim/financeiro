@@ -32,14 +32,18 @@
 │   │   └── infrastructure/       # Cliente HTTP de comunicação com a API FastAPI
 │   ├── package.json              # Scripts e dependências frontend (Next.js na porta 3020)
 │   └── tailwind.config.ts        # Tokens de cores e tipografia Montserrat
-├── src/                          # Backend Python (FastAPI + Agente)
+├── src/                          # Backend Python (FastAPI + Malha Multiagente)
 │   ├── api/                      # Camada de apresentação da API
 │   │   ├── main.py               # Instância FastAPI, CORS e middleware
 │   │   ├── routes.py             # Rotas REST (/api/chat, /api/transactions, /api/reports, /health)
 │   │   └── schemas.py            # Modelos Pydantic de requisição e resposta
-│   ├── agent/                    # Orquestração do agente LLM
-│   │   ├── engine.py             # Lógica de processamento e detecção de mutações/relatórios
-│   │   └── prompts.py            # Instruções e system prompts do agente
+│   ├── agent/                    # Orquestração e Malha Multiagente
+│   │   ├── base.py               # Contratos BaseAgent, AgentContext e AgentResult
+│   │   ├── registry.py           # Catálogo dinâmico de agentes especializados
+│   │   ├── router.py             # Supervisor / Roteador com fallback resiliente
+│   │   ├── engine.py             # Adaptador de compatibilidade do agente
+│   │   ├── prompts.py            # Instruções e system prompts
+│   │   └── specialists/          # Especialistas: Transaction, Report, Advisory, General, BudgetGoal
 │   ├── guardrail/                # Validação de escopo financeiro estrito
 │   │   ├── validator.py          # Validador com suporte a relatórios e moedas
 │   │   └── rules.py              # Palavras-chave permitidas e mensagens de recusa
@@ -52,9 +56,11 @@
 │   │   └── math_tool.py          # Operações matemáticas sem alucinação
 │   ├── config.py                 # Configurações globais e carregamento do .env
 │   └── app.py                    # Streamlit (descontinuado)
+├── docs/
+│   └── multiagent_guide.md       # Guia para criação e plug-in de novos agentes especializados
 ├── scripts/
 │   └── dev.sh                    # Script executável para inicialização unificada (FastAPI :8000 + Next.js :3020)
-└── tests/                        # Suíte de testes automatizados pytest (34 testes)
+└── tests/                        # Suíte de testes automatizados pytest (54+ testes)
 ```
 
 ## Comandos Padrão

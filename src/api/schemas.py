@@ -24,6 +24,8 @@ class ChatMessageResponse(BaseModel):
     pending_action: Optional[PendingAction] = None
     is_report: bool = False
     report_data: Optional[ReportData] = None
+    agent_name: Optional[str] = None
+    suggested_actions: Optional[List[str]] = None
 
 class TransactionItem(BaseModel):
     descricao: str
