@@ -5,18 +5,56 @@ build/
 dist/
 wheels/
 *.egg-info
+*.egg
+
+# OS & Editor files
 .DS_Store
 */.DS_Store
+**/.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
 
-# Virtual environments & Node modules
-.venv
-node_modules/
-.next/
-out/
+# Virtual environments & Cache
+.venv/
+venv/
+env/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 .cache/
+
+# Node & Next.js
+node_modules/
+frontend/node_modules/
+.next/
+frontend/.next/
+out/
+frontend/out/
+frontend/next-env.d.ts
 
 # Secrets & Credentials (NEVER COMMIT)
 .env
+.env.*
 .env*.local
+!.env.example
 credentials*.json
 token*.json
+service_account*.json
+service-account*.json
+client_secret*.json
+*.pem
+*.key
+*.pfx
+*.p12
+*.pkcs12
+*.crt
+*.cer
+
+# Local Databases & Backups
+*.sqlite
+*.sqlite3
+*.db
+
