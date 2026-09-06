@@ -1,0 +1,36 @@
+{
+  "$schema": "forge-sdd/metrics/1.0",
+  "feature": "sdd/features/feat-c094-renomear-src-para-backend.md",
+  "phase": "build",
+  "agent_path": [
+    "orquestrador",
+    "builder"
+  ],
+  "tokens_input": 45000,
+  "tokens_output": 6000,
+  "turns": 2,
+  "duration_seconds": 900,
+  "criterio_atendido": true,
+  "model": "claude-sonnet-5",
+  "rework_lines": 0,
+  "context7_calls": 0,
+  "git_calls": 0,
+  "files_touched": [
+    "backend/",
+    "tests/",
+    "scripts/dev.sh",
+    "README.md",
+    ".agents/rules/arquitetura.md",
+    "docs/criando_novos_agentes.md",
+    "docs/guia_agentes_para_leigos.md",
+    "docs/multiagent_guide.md",
+    "sdd/spec/modules.md",
+    "sdd/spec/stack.md",
+    "sdd/features/feat-c094-renomear-src-para-backend.md",
+    "sdd/features/index.md",
+    "sdd/memory/progress.md",
+    "sdd/releases/history.md"
+  ],
+  "outcome": "approved",
+  "sdd_version": "2.3.0-beta"
+}
