@@ -14,7 +14,7 @@ trap cleanup SIGINT SIGTERM EXIT
 
 # 1. Inicia o backend FastAPI
 echo "📦 Iniciando Backend FastAPI na porta 8000..."
-uv run uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload &
+uv run uvicorn backend.api.main:app --host 0.0.0.0 --port 8000 --reload &
 BACKEND_PID=$!
 
 # Aguarda inicialização do backend

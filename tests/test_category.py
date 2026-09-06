@@ -1,4 +1,4 @@
-from src.tools.category import CategoryTool
+from backend.tools.category import CategoryTool
 
 def test_categorize_known_keywords():
     assert CategoryTool.categorize("Supermercado Carrefour") == "Alimentação"

@@ -1,4 +1,4 @@
-from src.agent.engine import FinancialAgent
+from backend.agent.engine import FinancialAgent
 
 def test_agent_fallback_balance():
     agent = FinancialAgent(api_key="")

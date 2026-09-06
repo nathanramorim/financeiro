@@ -184,7 +184,7 @@ Pronto! Agora é só abrir no navegador:
 
 **Terminal 1 — Backend (FastAPI):**
 ```bash
-uv run uvicorn src.api.main:app --port 8000 --reload
+uv run uvicorn backend.api.main:app --port 8000 --reload
 ```
 
 **Terminal 2 — Frontend (Next.js):**

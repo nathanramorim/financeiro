@@ -1,10 +1,10 @@
 import pytest
 from unittest.mock import MagicMock
-from src.agent.base import AgentContext
-from src.agent.specialists.transaction_agent import TransactionAgent
-from src.agent.specialists.report_agent import ReportAgent
-from src.agent.specialists.advisory_agent import AdvisoryAgent
-from src.agent.specialists.general_agent import GeneralFinancialAgent
+from backend.agent.base import AgentContext
+from backend.agent.specialists.transaction_agent import TransactionAgent
+from backend.agent.specialists.report_agent import ReportAgent
+from backend.agent.specialists.advisory_agent import AdvisoryAgent
+from backend.agent.specialists.general_agent import GeneralFinancialAgent
 
 @pytest.fixture
 def mock_expense_tool():
@@ -144,8 +144,8 @@ def test_general_agent_concepts_local_knowledge():
 # --- Testes do Agente de Extensão (BudgetGoalAgent) ---
 
 def test_budget_goal_agent_extension(mock_income_tool, mock_expense_tool):
-    from src.agent.specialists.budget_goal_agent import BudgetGoalAgent
-    from src.agent.router import AgentRouter
+    from backend.agent.specialists.budget_goal_agent import BudgetGoalAgent
+    from backend.agent.router import AgentRouter
 
     goal_agent = BudgetGoalAgent(income_tool=mock_income_tool, expense_tool=mock_expense_tool)
     assert goal_agent.can_handle(AgentContext(message="minha meta é poupar R$ 1000")) >= 0.90

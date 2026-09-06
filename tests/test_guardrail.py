@@ -1,5 +1,5 @@
 import pytest
-from src.guardrail.validator import GuardrailValidator
+from backend.guardrail.validator import GuardrailValidator
 
 def test_guardrail_valid_financial_prompt():
     validator = GuardrailValidator()

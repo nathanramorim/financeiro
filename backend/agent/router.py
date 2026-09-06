@@ -1,13 +1,13 @@
 import logging
 from typing import Optional
-from src.agent.base import BaseAgent, AgentContext, AgentResult
-from src.agent.registry import AgentRegistry
-from src.agent.specialists.transaction_agent import TransactionAgent
-from src.agent.specialists.report_agent import ReportAgent
-from src.agent.specialists.advisory_agent import AdvisoryAgent
-from src.agent.specialists.general_agent import GeneralFinancialAgent
-from src.tools.expenses import ExpenseTool
-from src.tools.income import IncomeTool
+from backend.agent.base import BaseAgent, AgentContext, AgentResult
+from backend.agent.registry import AgentRegistry
+from backend.agent.specialists.transaction_agent import TransactionAgent
+from backend.agent.specialists.report_agent import ReportAgent
+from backend.agent.specialists.advisory_agent import AdvisoryAgent
+from backend.agent.specialists.general_agent import GeneralFinancialAgent
+from backend.tools.expenses import ExpenseTool
+from backend.tools.income import IncomeTool
 
 logger = logging.getLogger("AgentRouter")
 

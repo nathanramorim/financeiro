@@ -4,8 +4,8 @@ import json
 from pathlib import Path
 import gspread
 from google.oauth2.service_account import Credentials
-from src.config import GOOGLE_SHEETS_CREDENTIALS_FILE, GOOGLE_SHEET_NAME
-from src.tools.math_tool import MathTool
+from backend.config import GOOGLE_SHEETS_CREDENTIALS_FILE, GOOGLE_SHEET_NAME
+from backend.tools.math_tool import MathTool
 
 EXPECTED_STRUCTURE = {
     "Despesas": ["Descrição", "Valor", "Tipo", "Categoria", "Data"],

@@ -32,7 +32,7 @@
 │   │   └── infrastructure/       # Cliente HTTP de comunicação com a API FastAPI
 │   ├── package.json              # Scripts e dependências frontend (Next.js na porta 3020)
 │   └── tailwind.config.ts        # Tokens de cores e tipografia Montserrat
-├── src/                          # Backend Python (FastAPI + Malha Multiagente)
+├── backend/                       # Backend Python (FastAPI + Malha Multiagente)
 │   ├── api/                      # Camada de apresentação da API
 │   │   ├── main.py               # Instância FastAPI, CORS e middleware
 │   │   ├── routes.py             # Rotas REST (/api/chat, /api/transactions, /api/reports, /health)
@@ -65,7 +65,7 @@
 
 ## Comandos Padrão
 - **Execução Unificada:** `./scripts/dev.sh`
-- **Backend Individual:** `uv run uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload`
+- **Backend Individual:** `uv run uvicorn backend.api.main:app --host 0.0.0.0 --port 8000 --reload`
 - **Frontend Individual:** `npm run dev --prefix frontend` (acesso em `http://localhost:3020`)
 - **Testes Backend:** `uv run pytest`
 - **Build Frontend:** `npm run build --prefix frontend`

@@ -1,4 +1,4 @@
-from src.services.sheets import SheetsService
+from backend.services.sheets import SheetsService
 
 class IncomeTool:
     def __init__(self, sheets_service: SheetsService = None):

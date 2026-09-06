@@ -1,8 +1,8 @@
 import pytest
 from fastapi.testclient import TestClient
 from unittest.mock import MagicMock
-from src.api.main import app
-from src.api.routes import get_agent
+from backend.api.main import app
+from backend.api.routes import get_agent
 
 @pytest.fixture
 def mock_agent():

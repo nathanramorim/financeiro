@@ -1,5 +1,5 @@
-from src.services.sheets import SheetsService
-from src.tools.category import CategoryTool
+from backend.services.sheets import SheetsService
+from backend.tools.category import CategoryTool
 
 class ExpenseTool:
     def __init__(self, sheets_service: SheetsService = None):

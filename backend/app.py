@@ -1,14 +1,14 @@
 import sys
 from pathlib import Path
 
-# Adiciona o diretório raiz do projeto ao sys.path para o Streamlit reconhecer o pacote 'src'
+# Adiciona o diretório raiz do projeto ao sys.path para o Streamlit reconhecer o pacote 'backend'
 root_dir = Path(__file__).resolve().parent.parent
 if str(root_dir) not in sys.path:
     sys.path.insert(0, str(root_dir))
 
 import streamlit as st
-from src.guardrail.validator import GuardrailValidator
-from src.agent.engine import FinancialAgent
+from backend.guardrail.validator import GuardrailValidator
+from backend.agent.engine import FinancialAgent
 
 # Configuração de Página Streamlit
 st.set_page_config(

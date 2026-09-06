@@ -1,10 +1,10 @@
 import re
 from typing import Optional
-from src.agent.base import BaseAgent, AgentContext, AgentResult
-from src.agent.prompts import BUDGET_GOAL_AGENT_PROMPT
-from src.tools.income import IncomeTool
-from src.tools.expenses import ExpenseTool
-from src.tools.math_tool import MathTool
+from backend.agent.base import BaseAgent, AgentContext, AgentResult
+from backend.agent.prompts import BUDGET_GOAL_AGENT_PROMPT
+from backend.tools.income import IncomeTool
+from backend.tools.expenses import ExpenseTool
+from backend.tools.math_tool import MathTool
 
 class BudgetGoalAgent(BaseAgent):
     """

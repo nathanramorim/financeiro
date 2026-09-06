@@ -1,5 +1,5 @@
 from typing import Optional
-from src.agent.base import BaseAgent, AgentContext
+from backend.agent.base import BaseAgent, AgentContext
 
 class AgentRegistry:
     """Catálogo dinâmico para registro e descoberta de agentes especializados."""

@@ -1,6 +1,6 @@
 import pytest
-from src.agent.base import BaseAgent, AgentContext, AgentResult
-from src.agent.registry import AgentRegistry
+from backend.agent.base import BaseAgent, AgentContext, AgentResult
+from backend.agent.registry import AgentRegistry
 
 class DummyHighAgent(BaseAgent):
     def __init__(self):

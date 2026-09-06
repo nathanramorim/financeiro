@@ -15,13 +15,13 @@ Isso significa que você pode criar e plugar novos agentes **sem modificar nenhu
 
 ---
 
-### Passo 1: Definir o Prompt do Especialista em `src/agent/prompts.py`
+### Passo 1: Definir o Prompt do Especialista em `backend/agent/prompts.py`
 
-Abra o arquivo [`src/agent/prompts.py`](../src/agent/prompts.py) e adicione a constante com o prompt do seu agente.  
+Abra o arquivo [`backend/agent/prompts.py`](../backend/agent/prompts.py) e adicione a constante com o prompt do seu agente.  
 O prompt deve definir claramente a **persona**, o **escopo**, as **ferramentas permitidas** e as **regras de conduta**.
 
 ```python
-# Em src/agent/prompts.py:
+# Em backend/agent/prompts.py:
 
 INVESTMENT_AGENT_PROMPT = """Você é o Especialista em Simulação de Investimentos (InvestmentAgent).
 Sua missão é ajudar o usuário a simular rendimentos de renda fixa (CDB, Tesouro Direto, LCI/LCA).
@@ -39,16 +39,16 @@ REGRAS DE CONDUTA:
 
 ---
 
-### Passo 2: Criar a Classe do Agente em `src/agent/specialists/`
+### Passo 2: Criar a Classe do Agente em `backend/agent/specialists/`
 
-Crie o arquivo do seu agente (por exemplo, `src/agent/specialists/investment_agent.py`):
+Crie o arquivo do seu agente (por exemplo, `backend/agent/specialists/investment_agent.py`):
 
 ```python
-# src/agent/specialists/investment_agent.py
+# backend/agent/specialists/investment_agent.py
 import re
-from src.agent.base import BaseAgent, AgentContext, AgentResult
-from src.agent.prompts import INVESTMENT_AGENT_PROMPT
-from src.tools.math_tool import MathTool
+from backend.agent.base import BaseAgent, AgentContext, AgentResult
+from backend.agent.prompts import INVESTMENT_AGENT_PROMPT
+from backend.tools.math_tool import MathTool
 
 class InvestmentAgent(BaseAgent):
     """Especialista em projeções de investimentos e renda fixa."""
@@ -105,9 +105,9 @@ class InvestmentAgent(BaseAgent):
         )
 ```
 
-Exporte seu agente em [`src/agent/specialists/__init__.py`](../src/agent/specialists/__init__.py):
+Exporte seu agente em [`backend/agent/specialists/__init__.py`](../backend/agent/specialists/__init__.py):
 ```python
-from src.agent.specialists.investment_agent import InvestmentAgent
+from backend.agent.specialists.investment_agent import InvestmentAgent
 ```
 
 ---
@@ -115,10 +115,10 @@ from src.agent.specialists.investment_agent import InvestmentAgent
 ### Passo 3: Registrar o Agente no `AgentRouter`
 
 Basta registrar a instância no `AgentRouter` ou no `AgentRegistry`.  
-No arquivo [`src/agent/router.py`](../src/agent/router.py), dentro de `_register_default_specialists`:
+No arquivo [`backend/agent/router.py`](../backend/agent/router.py), dentro de `_register_default_specialists`:
 
 ```python
-from src.agent.specialists.investment_agent import InvestmentAgent
+from backend.agent.specialists.investment_agent import InvestmentAgent
 
 def _register_default_specialists(self) -> None:
     ...
@@ -140,7 +140,7 @@ Adicione um teste unitário em [`tests/test_specialist_agents.py`](../tests/test
 
 ```python
 def test_investment_agent():
-    from src.agent.specialists.investment_agent import InvestmentAgent
+    from backend.agent.specialists.investment_agent import InvestmentAgent
     agent = InvestmentAgent()
 
     # 1. Valida detecção de intenção

@@ -25,7 +25,7 @@ O **Prompt** é a "descrição de cargo" e o conjunto de regras de conduta do ag
 
 > 📍 **Onde ficam os prompts no projeto?**  
 > Todos os prompts dos especialistas estão centralizados e organizados no arquivo:  
-> [`src/agent/prompts.py`](../src/agent/prompts.py)
+> [`backend/agent/prompts.py`](../backend/agent/prompts.py)
 
 ---
 
