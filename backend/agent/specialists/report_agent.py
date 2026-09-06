@@ -1,10 +1,10 @@
 from typing import Optional
-from src.agent.base import BaseAgent, AgentContext, AgentResult
-from src.agent.prompts import REPORT_AGENT_PROMPT
-from src.tools.expenses import ExpenseTool
-from src.tools.income import IncomeTool
-from src.tools.category import CategoryTool
-from src.tools.math_tool import MathTool
+from backend.agent.base import BaseAgent, AgentContext, AgentResult
+from backend.agent.prompts import REPORT_AGENT_PROMPT
+from backend.tools.expenses import ExpenseTool
+from backend.tools.income import IncomeTool
+from backend.tools.category import CategoryTool
+from backend.tools.math_tool import MathTool
 
 class ReportAgent(BaseAgent):
     """Especialista em geração de relatórios executivos, saldos e agregações por categoria."""

@@ -16,10 +16,10 @@ A arquitetura do assistente financeiro adota o padrão **Supervisor / Workers (R
 ## 2. Passo a Passo para Criar um Novo Agente
 
 ### Passo 2.1: Estender `BaseAgent`
-Crie um arquivo em `src/agent/specialists/<nome_do_agente>.py`:
+Crie um arquivo em `backend/agent/specialists/<nome_do_agente>.py`:
 
 ```python
-from src.agent.base import BaseAgent, AgentContext, AgentResult
+from backend.agent.base import BaseAgent, AgentContext, AgentResult
 
 class MeuNovoEspecialista(BaseAgent):
     def __init__(self):
@@ -57,11 +57,11 @@ class MeuNovoEspecialista(BaseAgent):
 ---
 
 ### Passo 2.2: Registrar o Novo Agente no Roteador
-No ponto de composição da aplicação (`src/agent/router.py`) ou dinamicamente na inicialização do serviço:
+No ponto de composição da aplicação (`backend/agent/router.py`) ou dinamicamente na inicialização do serviço:
 
 ```python
-from src.agent.router import AgentRouter
-from src.agent.specialists.meu_novo_especialista import MeuNovoEspecialista
+from backend.agent.router import AgentRouter
+from backend.agent.specialists.meu_novo_especialista import MeuNovoEspecialista
 
 router = AgentRouter()
 router.registry.register(MeuNovoEspecialista())

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from src.guardrail.rules import FINANCIAL_KEYWORDS, OUT_OF_SCOPE_MSG
+from backend.guardrail.rules import FINANCIAL_KEYWORDS, OUT_OF_SCOPE_MSG
 
 EXCLUDED_PHRASES = [
     "receita de", "bolo", "cozinha", "culinária", "comida", "piada", "poema", "futebol"

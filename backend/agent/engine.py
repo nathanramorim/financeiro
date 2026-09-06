@@ -1,10 +1,10 @@
 import json
 import requests
-from src.config import OPENROUTER_API_KEY, OPENROUTER_BASE_URL, OPENROUTER_MODEL
-from src.agent.prompts import SYSTEM_PROMPT
-from src.tools.math_tool import MathTool
-from src.tools.expenses import ExpenseTool
-from src.tools.income import IncomeTool
+from backend.config import OPENROUTER_API_KEY, OPENROUTER_BASE_URL, OPENROUTER_MODEL
+from backend.agent.prompts import SYSTEM_PROMPT
+from backend.tools.math_tool import MathTool
+from backend.tools.expenses import ExpenseTool
+from backend.tools.income import IncomeTool
 
 class FinancialAgent:
     def __init__(self, api_key: str = OPENROUTER_API_KEY, model: str = OPENROUTER_MODEL):
@@ -183,7 +183,7 @@ class FinancialAgent:
         tot_receitas = sum(MathTool.parse_float(i.get("Valor", 0)) for i in incomes)
         saldo = tot_receitas - tot_despesas
 
-        from src.tools.category import CategoryTool
+        from backend.tools.category import CategoryTool
         cat_dict = {}
         for e in expenses:
             cat = e.get("Categoria")
@@ -243,7 +243,7 @@ class FinancialAgent:
                         break
             tokens = [t for t in user_message.split() if t.lower() not in ["add", "adicionar", "adicionei", "cadastrar", "incluir", "atualizar", "editar", "despesa", "gasto", "r$", "de", "com", "uma", "um"]]
             descricao = " ".join([t for t in tokens if not re.match(r"^\d+(?:[.,]\d+)?$", t)]) or "Despesa Genérica"
-            from src.tools.category import CategoryTool
+            from backend.tools.category import CategoryTool
             categoria = CategoryTool.categorize(descricao)
             if valor > 0:
                 is_update = "atualizar" in msg_lower or "editar" in msg_lower

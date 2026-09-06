@@ -8,12 +8,12 @@ Fase 3 — Multiagente & UI [X] concluído
 ```
 
 ## Features ativas
-Nenhuma feature ativa no momento. Todas as tarefas anteriores foram concluídas e arquivadas em `sdd/memory/progress-log.md`.
+Nenhuma feature ativa no momento. `feat-c094-renomear-src-para-backend` implementada, aguardando revisão (`/revisar`) e merge do PR.
 
 ## Próximo passo
-- Pronto para novas demandas via `/nova-feature` ou `/novo-fix`.
+- Rodar `/revisar` na branch `feat/c094-renomear-src-para-backend` antes do merge.
 - Sistema operando em produção local (FastAPI :8000 + Next.js :3020) com 60/60 testes verdes.
 
 ## Handoff da última sessão
-- Histórico arquivado com sucesso. Repositório público sincronizado no GitHub.
+- `src/` renomeado para `backend/` (imports, testes, scripts e docs atualizados). PR aberto para `feat/c094-renomear-src-para-backend`.
 

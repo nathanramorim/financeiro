@@ -3,16 +3,16 @@
 O projeto adota uma arquitetura desacoplada com backend em Python (FastAPI) e frontend moderno em Next.js (App Router, TypeScript e Tailwind CSS).
 
 ## 1. Backend (Python / FastAPI)
-- Localizado em `src/`, gerenciado estritamente com `uv`.
+- Localizado em `backend/`, gerenciado estritamente com `uv`.
 - Organizado em módulos com responsabilidades isoladas (Clean Architecture):
-  - **Presentation / API (`src/api/`):** Rotas FastAPI, controllers REST, modelos Pydantic de request/response e tratamento de CORS/erros.
-  - **Application / Malha Multiagente (`src/agent/`):**
+  - **Presentation / API (`backend/api/`):** Rotas FastAPI, controllers REST, modelos Pydantic de request/response e tratamento de CORS/erros.
+  - **Application / Malha Multiagente (`backend/agent/`):**
     - `AgentRouter`: Supervisor/Roteador inteligente de intenções com fallback resiliente.
     - `AgentRegistry`: Catálogo dinâmico para descoberta e registro plug-and-play de especialistas.
     - `BaseAgent`, `AgentContext`, `AgentResult`: Contratos padronizados de entrada e saída.
-    - `src/agent/specialists/`: Especialistas isolados (`TransactionAgent`, `ReportAgent`, `AdvisoryAgent`, `GeneralFinancialAgent`, `BudgetGoalAgent`).
-  - **Domain / Guardrails (`src/guardrail/`):** Regras de negócio de segurança e filtro de escopo financeiro estrito.
-  - **Infrastructure / Services & Tools (`src/services/`, `src/tools/`):** Integrações externas (`SheetsService` com cache TTL de 30s) e ferramentas (`MathTool`, `CategoryTool`).
+    - `backend/agent/specialists/`: Especialistas isolados (`TransactionAgent`, `ReportAgent`, `AdvisoryAgent`, `GeneralFinancialAgent`, `BudgetGoalAgent`).
+  - **Domain / Guardrails (`backend/guardrail/`):** Regras de negócio de segurança e filtro de escopo financeiro estrito.
+  - **Infrastructure / Services & Tools (`backend/services/`, `backend/tools/`):** Integrações externas (`SheetsService` com cache TTL de 30s) e ferramentas (`MathTool`, `CategoryTool`).
 - Regra: Nenhuma operação aritmética é delegada a texto livre de LLM; deve passar pelo `MathTool` ou agregador analítico do `ReportAgent`. Toda requisição de chat deve ser validada previamente pelos guardrails. Novos agentes devem estender `BaseAgent` e registrar-se no `AgentRegistry` sem modificar rotas.
 
 ## 2. Frontend (Next.js App Router)

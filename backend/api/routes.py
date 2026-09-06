@@ -1,9 +1,9 @@
 from fastapi import APIRouter, HTTPException, Depends
-from src.agent.router import AgentRouter
-from src.agent.engine import FinancialAgent
-from src.guardrail.validator import GuardrailValidator
-from src.tools.math_tool import MathTool
-from src.api.schemas import (
+from backend.agent.router import AgentRouter
+from backend.agent.engine import FinancialAgent
+from backend.guardrail.validator import GuardrailValidator
+from backend.tools.math_tool import MathTool
+from backend.api.schemas import (
     ChatMessageRequest,
     ChatMessageResponse,
     PendingAction,
@@ -39,7 +39,7 @@ def handle_chat(payload: ChatMessageRequest, agent = Depends(get_agent)):
 
     # 2. Se o agente for uma instância de AgentRouter (roteamento multiagente nativo)
     if isinstance(agent, AgentRouter):
-        from src.agent.base import AgentContext
+        from backend.agent.base import AgentContext
         ctx = AgentContext(message=payload.message, history=payload.history or [])
         res = agent.route(ctx)
         
@@ -95,7 +95,7 @@ def get_transactions(agent: FinancialAgent = Depends(get_agent)):
     tot_receitas = sum(MathTool.parse_float(i.get("Valor", 0)) for i in incomes)
     saldo = tot_receitas - tot_despesas
 
-    from src.tools.category import CategoryTool
+    from backend.tools.category import CategoryTool
     cat_dict = {}
     for e in expenses:
         cat = e.get("Categoria")

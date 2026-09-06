@@ -2,11 +2,11 @@ import json
 import logging
 import requests
 from typing import Optional
-from src.agent.base import BaseAgent, AgentContext, AgentResult
-from src.config import OPENROUTER_API_KEY, OPENROUTER_BASE_URL, OPENROUTER_MODEL
-from src.agent.prompts import GENERAL_AGENT_PROMPT
-from src.tools.math_tool import MathTool
-from src.tools.expenses import ExpenseTool
+from backend.agent.base import BaseAgent, AgentContext, AgentResult
+from backend.config import OPENROUTER_API_KEY, OPENROUTER_BASE_URL, OPENROUTER_MODEL
+from backend.agent.prompts import GENERAL_AGENT_PROMPT
+from backend.tools.math_tool import MathTool
+from backend.tools.expenses import ExpenseTool
 
 logger = logging.getLogger("GeneralFinancialAgent")
 

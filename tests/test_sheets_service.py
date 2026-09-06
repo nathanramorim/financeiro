@@ -1,8 +1,8 @@
 from unittest.mock import MagicMock
 import gspread
-from src.services.sheets import SheetsService, EXPECTED_STRUCTURE
-from src.tools.expenses import ExpenseTool
-from src.tools.income import IncomeTool
+from backend.services.sheets import SheetsService, EXPECTED_STRUCTURE
+from backend.tools.expenses import ExpenseTool
+from backend.tools.income import IncomeTool
 
 def test_sheets_service_initial_records():
     service = SheetsService(credentials_path="non_existent.json")
