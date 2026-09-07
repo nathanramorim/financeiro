@@ -29,8 +29,10 @@ main
 │  └─ fix-b208-sugestoes-input-chat [done]
 ├─ feat/c309-readme-banner-gif-arquitetura (COMPLETED)
 │  └─ feat-c309-readme-banner-gif-arquitetura [done]
-└─ feat/c094-renomear-src-para-backend (COMPLETED)
-   └─ feat-c094-renomear-src-para-backend [done]
+├─ feat/c094-renomear-src-para-backend (COMPLETED)
+│  └─ feat-c094-renomear-src-para-backend [done]
+└─ fix/5362-cache-sheets-zerado-nao-propagado (COMPLETED)
+   └─ fix-5362-cache-sheets-zerado-nao-propagado [done]
 ```
 
 ## Índice
@@ -55,3 +57,4 @@ main
 | b208 | `fix-b208-sugestoes-input-chat.md` | `fix/b208-sugestoes-input-chat` | 1 | done |
 | c309 | `feat-c309-readme-banner-gif-arquitetura.md` | `feat/c309-readme-banner-gif-arquitetura` | 1 | done |
 | c094 | `feat-c094-renomear-src-para-backend.md` | `feat/c094-renomear-src-para-backend` | 1 | done |
+| 5362 | `fix-5362-cache-sheets-zerado-nao-propagado.md` | `fix/5362-cache-sheets-zerado-nao-propagado` | 1 | done |
