@@ -1,0 +1,24 @@
+{
+  "$schema": "forge-sdd/metrics/1.0",
+  "feature": "sdd/features/feat-c094-renomear-src-para-backend.md",
+  "phase": "review",
+  "agent_path": [
+    "revisor"
+  ],
+  "tokens_input": 20000,
+  "tokens_output": 2000,
+  "turns": 1,
+  "duration_seconds": 300,
+  "criterio_atendido": true,
+  "model": "claude-sonnet-5",
+  "rework_lines": 0,
+  "context7_calls": 0,
+  "git_calls": 0,
+  "files_touched": [
+    "backend/",
+    "tests/",
+    "scripts/dev.sh"
+  ],
+  "outcome": "approved",
+  "sdd_version": "2.3.0-beta"
+}

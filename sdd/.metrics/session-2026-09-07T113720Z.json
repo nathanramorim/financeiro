@@ -1,0 +1,24 @@
+{
+  "$schema": "forge-sdd/metrics/1.0",
+  "feature": "sdd/features/fix-5362-cache-sheets-zerado-nao-propagado.md",
+  "phase": "spec",
+  "agent_path": [
+    "orquestrador"
+  ],
+  "tokens_input": 15000,
+  "tokens_output": 2500,
+  "turns": 1,
+  "duration_seconds": 240,
+  "criterio_atendido": false,
+  "model": "claude-sonnet-5",
+  "rework_lines": 0,
+  "context7_calls": 0,
+  "git_calls": 0,
+  "files_touched": [
+    "sdd/features/fix-5362-cache-sheets-zerado-nao-propagado.md",
+    "sdd/features/index.md",
+    "sdd/memory/progress.md"
+  ],
+  "outcome": "blocked",
+  "sdd_version": "2.3.0-beta"
+}
