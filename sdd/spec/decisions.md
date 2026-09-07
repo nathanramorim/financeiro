@@ -23,3 +23,9 @@
 - **Contexto:** Modelos LLM são propensos a erros de alucinação em operações matemáticas (divisão, multiplicação, parcelamentos).
 - **Decisão:** Delegar qualquer conta numérica para execução em código Python nativo via Tool.
 - **Consequência:** Garantia de 100% de exatidão nos valores das despesas e saldos.
+
+## ADR-05: Arquitetura Multiagente com Roteador/Supervisor
+- **Status:** Aceito
+- **Contexto:** O agente mono-agente inicial (`FinancialAgent`) acumulava responsabilidades de transação, relatório, consultoria e cálculo em um único prompt, aumentando risco de alucinação e dificultando extensão.
+- **Decisão:** Desacoplar em agentes especialistas (`TransactionAgent`, `ReportAgent`, `AdvisoryAgent`, `BudgetGoalAgent`, `GeneralAgent`), coordenados por um `Router`/Supervisor (`backend/agent/router.py`) com fallback resiliente, seguindo o padrão de registro plug-and-play (`AgentRegistry`, `BaseAgent`).
+- **Consequência:** Cada especialista tem prompt e regras focados no seu domínio; novos agentes podem ser adicionados sem alterar rotas ou core da API.

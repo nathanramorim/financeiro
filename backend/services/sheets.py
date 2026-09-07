@@ -51,9 +51,10 @@ class SheetsService:
                 with open(CACHE_FILE, "r", encoding="utf-8") as f:
                     data = json.load(f)
                     if isinstance(data, dict):
-                        if "Despesas" in data and data["Despesas"]:
+                        # Respeita lista vazia salva (planilha zerada) — só ignora chave ausente/tipo inválido
+                        if isinstance(data.get("Despesas"), list):
                             self._in_memory_db["Despesas"] = data["Despesas"]
-                        if "Receitas" in data and data["Receitas"]:
+                        if isinstance(data.get("Receitas"), list):
                             self._in_memory_db["Receitas"] = data["Receitas"]
         except Exception as e:
             print(f"[SheetsService Warning] Falha ao ler backup local: {e}")
@@ -139,7 +140,8 @@ class SheetsService:
                 try:
                     worksheet = self.sheet.worksheet("Despesas")
                     records = worksheet.get_all_records(numericise_ignore=['all'])
-                    if records:
+                    # Propaga mesmo lista vazia (planilha zerada) — distingue leitura bem-sucedida de falha
+                    if records is not None:
                         self._in_memory_db["Despesas"] = records
                         SheetsService._cached_expenses = records
                         SheetsService._cached_expenses_time = now
@@ -193,7 +195,8 @@ class SheetsService:
                 try:
                     worksheet = self.sheet.worksheet("Receitas")
                     records = worksheet.get_all_records(numericise_ignore=['all'])
-                    if records:
+                    # Propaga mesmo lista vazia (planilha zerada) — distingue leitura bem-sucedida de falha
+                    if records is not None:
                         self._in_memory_db["Receitas"] = records
                         SheetsService._cached_incomes = records
                         SheetsService._cached_incomes_time = now
