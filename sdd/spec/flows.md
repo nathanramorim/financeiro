@@ -6,19 +6,23 @@
 sequenceDiagram
     autonumber
     actor User as Usuário
-    participant UI as Web UI (Streamlit)
+    participant UI as Web UI (Next.js)
+    participant API as API REST (FastAPI)
     participant Guardrail as Guardrail Module
-    participant Agent as Agente Financeiro (OpenRouter)
+    participant Router as Router / Supervisor
+    participant Agent as Agente Especialista (OpenRouter)
     participant Math as MathTool
-    participant Sheets as Google Sheets Service
+    participant Sheets as SheetsService
 
     User->>UI: Envia pergunta/comando no chat
-    UI->>Guardrail: Valida mensagem de entrada
+    UI->>API: POST /api/chat
+    API->>Guardrail: Valida mensagem de entrada
     alt Mensagem Inválida / Fora de Escopo
-        Guardrail-->>UI: Retorna aviso de recusa por escopo
-        UI-->>User: Exibe mensagem de bloqueio amigável
+        Guardrail-->>API: Retorna aviso de recusa por escopo
+        API-->>UI: Exibe mensagem de bloqueio amigável
     else Mensagem Válida
-        Guardrail->>Agent: Encaminha mensagem validada
+        Guardrail->>Router: Encaminha mensagem validada
+        Router->>Agent: Roteia para o especialista adequado
         Agent->>Agent: Analisa intenção e decide Tool
         opt Requer Cálculo (ex: dividir despesas por 2)
             Agent->>Math: Executa cálculo numérico
@@ -28,7 +32,8 @@ sequenceDiagram
             Agent->>Sheets: Consulta ou Grava (Despesas/Receitas)
             Sheets-->>Agent: Retorna dados atualizados / confirmação
         end
-        Agent-->>UI: Resposta final estruturada
+        Agent-->>API: Resposta final estruturada
+        API-->>UI: Retorna resposta
         UI-->>User: Exibe resposta no chat
     end
 ```
