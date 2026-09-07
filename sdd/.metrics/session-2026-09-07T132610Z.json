@@ -1,0 +1,28 @@
+{
+  "$schema": "forge-sdd/metrics/1.0",
+  "feature": "sdd/features/feat-2320-dashboard-assistente-isolado",
+  "phase": "2320-01,2320-02,2320-03",
+  "agent_path": [
+    "orquestrador",
+    "builder"
+  ],
+  "tokens_input": 45000,
+  "tokens_output": 14000,
+  "turns": 20,
+  "duration_seconds": 1800,
+  "criterio_atendido": true,
+  "model": "claude-sonnet-5",
+  "rework_lines": 0,
+  "context7_calls": 0,
+  "git_calls": 0,
+  "files_touched": [
+    "frontend/src/app/assistente/page.tsx",
+    "frontend/src/app/layout.tsx",
+    "frontend/src/app/page.tsx",
+    "frontend/src/components/layout/ApiStatusProvider.tsx",
+    "frontend/src/components/layout/AppChrome.tsx",
+    "frontend/src/components/ui/BottomNav.tsx"
+  ],
+  "outcome": "approved",
+  "sdd_version": "2.3.0-beta"
+}

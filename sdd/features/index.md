@@ -31,8 +31,12 @@ main
 │  └─ feat-c309-readme-banner-gif-arquitetura [done]
 ├─ feat/c094-renomear-src-para-backend (COMPLETED)
 │  └─ feat-c094-renomear-src-para-backend [done]
-└─ fix/5362-cache-sheets-zerado-nao-propagado (COMPLETED)
-   └─ fix-5362-cache-sheets-zerado-nao-propagado [done]
+├─ fix/5362-cache-sheets-zerado-nao-propagado (COMPLETED)
+│  └─ fix-5362-cache-sheets-zerado-nao-propagado [done]
+└─ feat/2320-dashboard-assistente-isolado (COMPLETED)
+   ├─ feat-2320-01-navegacao-base [done]
+   ├─ feat-2320-02-unificacao-dashboard [done]
+   └─ feat-2320-03-polimento-mobile-qa [done]
 ```
 
 ## Índice
@@ -58,3 +62,6 @@ main
 | c309 | `feat-c309-readme-banner-gif-arquitetura.md` | `feat/c309-readme-banner-gif-arquitetura` | 1 | done |
 | c094 | `feat-c094-renomear-src-para-backend.md` | `feat/c094-renomear-src-para-backend` | 1 | done |
 | 5362 | `fix-5362-cache-sheets-zerado-nao-propagado.md` | `fix/5362-cache-sheets-zerado-nao-propagado` | 1 | done |
+| 2320-01 | `feat-2320-dashboard-assistente-isolado/feat-2320-01-navegacao-base.md` | `feat/2320-dashboard-assistente-isolado` | 1 | done |
+| 2320-02 | `feat-2320-dashboard-assistente-isolado/feat-2320-02-unificacao-dashboard.md` | `feat/2320-dashboard-assistente-isolado` | 2 | done |
+| 2320-03 | `feat-2320-dashboard-assistente-isolado/feat-2320-03-polimento-mobile-qa.md` | `feat/2320-dashboard-assistente-isolado` | 3 | done |
