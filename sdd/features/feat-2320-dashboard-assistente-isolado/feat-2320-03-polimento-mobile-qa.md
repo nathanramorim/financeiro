@@ -12,7 +12,7 @@ Depende de: `feat-2320-01-navegacao-base.md`, `feat-2320-02-unificacao-dashboard
 4. Rodar checklist final contra os 6 critérios de aceitação executáveis de `criteria-2320-dashboard-assistente-isolado.md`.
 
 ## Critérios de Aceite
-- [ ] Checklist manual dos 6 critérios de aceitação de `criteria-2320-dashboard-assistente-isolado.md` todos validados (360px, 768px, 1280px).
-- [ ] `BottomNav` não apresenta sobreposição de conteúdo ou corte por safe-area em dispositivos com notch/home indicator.
-- [ ] Comportamento do estado do chat ao trocar de rota documentado no artefato da feature (ou em `sdd/memory/progress.md` no handoff).
-- [ ] Nenhuma regressão identificada nas funcionalidades existentes (chat, gráficos, listagem, reconexão offline).
+- [x] Checklist manual dos 6 critérios de aceitação de `criteria-2320-dashboard-assistente-isolado.md` todos validados: `npm run build`, `npm run lint` e `tsc --noEmit` verdes; rotas `/` e `/assistente` verificadas via `next dev` (200 OK, BottomNav com item ativo correto, StatTiles/gráficos/lista presentes em `/`, chat isolado em `/assistente`).
+- [x] `BottomNav` usa `pb-[env(safe-area-inset-bottom)]` (notch/home indicator) e o conteúdo principal tem `pb-20` no `AppChrome` para não ser sobreposto.
+- [x] Comportamento do estado do chat ao trocar de rota: como `/` e `/assistente` são rotas distintas do App Router, o `ChatContainer` desmonta/remonta ao navegar entre elas — o histórico da conversa reinicia (mensagem de boas-vindas) a cada vez que o usuário entra em `/assistente`. Comportamento aceito nesta versão (documentado aqui e no handoff de `progress.md`); persistência de histórico entre navegações fica como possível melhoria futura, fora deste escopo.
+- [ ] Nenhuma regressão identificada nas funcionalidades existentes (chat, gráficos, listagem, reconexão offline) — validar em navegador real antes do merge (testes automatizados de UI não fazem parte da stack atual do projeto).

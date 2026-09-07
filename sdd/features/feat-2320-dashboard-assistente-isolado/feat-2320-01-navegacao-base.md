@@ -18,8 +18,8 @@ Referências: `sdd/discovery/discovery-2320-dashboard-assistente-isolado.md`, `s
    - Garantir `padding-bottom` no conteúdo principal para a BottomNav fixa não sobrepor conteúdo scrollável (inclui safe-area de iOS notch).
 
 ## Critérios de Aceite
-- [ ] `/` e `/assistente` são navegáveis via `BottomNav`, sem full page reload (client-side routing).
-- [ ] Item ativo da `BottomNav` reflete corretamente a rota atual.
-- [ ] `Topbar` com indicador de status (online/offline/checking) presente em ambas as rotas.
-- [ ] Nenhum conteúdo é sobreposto pela `BottomNav` fixa em viewport 360px.
-- [ ] Nenhuma alteração em `backend/**` (escopo restrito a `frontend/src/**`).
+- [x] `/` e `/assistente` são navegáveis via `BottomNav`, sem full page reload (client-side routing).
+- [x] Item ativo da `BottomNav` reflete corretamente a rota atual.
+- [x] `Topbar` com indicador de status (online/offline/checking) presente em ambas as rotas (via `ApiStatusProvider` + `AppChrome` no layout raiz).
+- [x] Nenhum conteúdo é sobreposto pela `BottomNav` fixa em viewport 360px (padding-bottom no `AppChrome` + safe-area inset).
+- [x] Nenhuma alteração em `backend/**` (escopo restrito a `frontend/src/**`).

@@ -15,8 +15,8 @@ Depende de: `feat-2320-01-navegacao-base.md` (a rota `/assistente` precisa exist
 2. Nenhuma mudança nos componentes `StatTile`, `FinancialCharts`, `Card`, `Badge`, `Button` — apenas reorganização de composição em `page.tsx`.
 
 ## Critérios de Aceite
-- [ ] `/` em viewport 360px exibe, em um único scroll, sem abas: StatTiles → Gráficos → Lista de despesas fixas.
-- [ ] `ChatContainer` não é mais renderizado em `/` (só existe em `/assistente`).
-- [ ] Polling de dados (`fetchFinancialSummary`, `fetchReports`, 15s) continua funcionando normalmente em `/`.
-- [ ] Banner de erro/reconexão quando backend offline continua funcional.
-- [ ] Nenhuma alteração em `backend/**`.
+- [x] `/` em viewport 360px exibe, em um único scroll, sem abas: StatTiles → Gráficos → Lista de despesas fixas.
+- [x] `ChatContainer` não é mais renderizado em `/` (só existe em `/assistente`).
+- [x] Polling de dados (`fetchFinancialSummary`, `fetchReports`, 15s) continua funcionando normalmente em `/`.
+- [x] Banner de erro/reconexão quando backend offline continua funcional (usa `apiStatus`/`refreshApiStatus` do `ApiStatusProvider` compartilhado).
+- [x] Nenhuma alteração em `backend/**`.

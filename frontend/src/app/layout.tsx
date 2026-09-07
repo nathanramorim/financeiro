@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Montserrat } from "next/font/google";
+import { AppChrome } from "@/components/layout/AppChrome";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -28,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={montserrat.variable}>
       <body className="min-h-screen bg-panel text-text font-sans antialiased">
-        {children}
+        <AppChrome>{children}</AppChrome>
       </body>
     </html>
   );
