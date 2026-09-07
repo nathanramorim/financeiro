@@ -29,8 +29,12 @@ main
 │  └─ fix-b208-sugestoes-input-chat [done]
 ├─ feat/c309-readme-banner-gif-arquitetura (COMPLETED)
 │  └─ feat-c309-readme-banner-gif-arquitetura [done]
-└─ feat/c094-renomear-src-para-backend (COMPLETED)
-   └─ feat-c094-renomear-src-para-backend [done]
+├─ feat/c094-renomear-src-para-backend (COMPLETED)
+│  └─ feat-c094-renomear-src-para-backend [done]
+└─ feat/2320-dashboard-assistente-isolado (PENDING)
+   ├─ feat-2320-01-navegacao-base [pending]
+   ├─ feat-2320-02-unificacao-dashboard [pending] (depende de 2320-01)
+   └─ feat-2320-03-polimento-mobile-qa [pending] (depende de 2320-01, 2320-02)
 ```
 
 ## Índice
@@ -55,3 +59,6 @@ main
 | b208 | `fix-b208-sugestoes-input-chat.md` | `fix/b208-sugestoes-input-chat` | 1 | done |
 | c309 | `feat-c309-readme-banner-gif-arquitetura.md` | `feat/c309-readme-banner-gif-arquitetura` | 1 | done |
 | c094 | `feat-c094-renomear-src-para-backend.md` | `feat/c094-renomear-src-para-backend` | 1 | done |
+| 2320-01 | `feat-2320-dashboard-assistente-isolado/feat-2320-01-navegacao-base.md` | `feat/2320-dashboard-assistente-isolado` | 1 | pending |
+| 2320-02 | `feat-2320-dashboard-assistente-isolado/feat-2320-02-unificacao-dashboard.md` | `feat/2320-dashboard-assistente-isolado` | 2 | pending |
+| 2320-03 | `feat-2320-dashboard-assistente-isolado/feat-2320-03-polimento-mobile-qa.md` | `feat/2320-dashboard-assistente-isolado` | 3 | pending |
