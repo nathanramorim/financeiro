@@ -7,7 +7,7 @@ type ApiStatus = "online" | "offline" | "checking";
 
 interface ApiStatusContextValue {
   apiStatus: ApiStatus;
-  refreshApiStatus: () => Promise<void>;
+  refreshApiStatus: () => Promise<boolean>;
 }
 
 const ApiStatusContext = createContext<ApiStatusContextValue | undefined>(undefined);
@@ -18,6 +18,7 @@ export const ApiStatusProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const refreshApiStatus = useCallback(async () => {
     const isHealthy = await checkApiHealth();
     setApiStatus(isHealthy ? "online" : "offline");
+    return isHealthy;
   }, []);
 
   useEffect(() => {

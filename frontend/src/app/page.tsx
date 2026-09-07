@@ -16,7 +16,9 @@ export default function HomePage() {
   const [reports, setReports] = useState<ReportData | null>(null);
 
   const loadData = useCallback(async () => {
-    await refreshApiStatus();
+    if (apiStatus !== "online") {
+      return;
+    }
 
     try {
       const [sumData, repData] = await Promise.all([
@@ -28,7 +30,7 @@ export default function HomePage() {
     } catch (e) {
       console.error("Erro ao sincronizar dados com o backend:", e);
     }
-  }, [refreshApiStatus]);
+  }, [apiStatus]);
 
   useEffect(() => {
     loadData();
@@ -53,7 +55,7 @@ export default function HomePage() {
           <Button
             variant="outline"
             size="sm"
-            onClick={loadData}
+            onClick={refreshApiStatus}
             className="text-xs shrink-0 self-end sm:self-auto"
           >
             Tentar reconectar
