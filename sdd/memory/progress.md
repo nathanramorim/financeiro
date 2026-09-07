@@ -8,11 +8,11 @@ Fase 3 — Multiagente & UI [X] concluído
 ```
 
 ## Features ativas
-Nenhuma feature ativa no momento. `feat-2320-dashboard-assistente-isolado` implementada e revisada (3/3 subtarefas + correções de revisão aplicadas), aguardando merge do PR #5.
+Nenhuma feature ativa no momento. `feat-2320-dashboard-assistente-isolado` implementada, revisada e validada manualmente pelo usuário em navegador real. Aguardando merge do PR #5.
 
 ## Próximo passo
-- Validar em navegador real (não coberto por automação nesta sessão): navegação `/` ↔ `/assistente`, safe-area em device com notch, banner offline.
-- Merge do PR #5 após validação manual.
+- Merge do PR #5.
+- Nenhuma feature `pending`/`todo` no índice no momento — próxima ação depende de novo `/discovery`, `/nova-feature` ou `/novo-fix`.
 
 ## Handoff da última sessão
 - Dashboard (`/`) e Assistente (`/assistente`) agora são rotas separadas do Next.js App Router, navegáveis por uma `BottomNav` fixa (mobile-first). `Topbar` e `BottomNav` vivem no layout raiz (`AppChrome` + `ApiStatusProvider`), compartilhando o status online/offline entre as duas rotas.
